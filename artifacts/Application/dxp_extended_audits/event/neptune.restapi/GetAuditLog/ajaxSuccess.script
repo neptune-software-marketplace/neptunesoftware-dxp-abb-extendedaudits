@@ -1,0 +1,13 @@
+let loGroups = modelDataAuditLogResponse.getData()?.result?.audit
+if (Array.isArray(loGroups)) { 
+    for (let loGroupItem of ModelData.Find(loGroups, 'objectType', 'Department')) {
+        loGroupItem.objectType = 'Group';
+    }
+    modelDataAuditLogResponse.refresh();
+}
+oTableSearchAuditResults.removeSelections();
+if (typeof oSplitterSearchAudit?.rerender == "function") { oSplitterSearchAudit.rerender(); }
+(new Promise(s=>s())).then(() => {
+    oSplitterListSearchAuditOptions.setResizable( true );
+    oSplitterListSearchAuditOptions.setSize('20%');
+});

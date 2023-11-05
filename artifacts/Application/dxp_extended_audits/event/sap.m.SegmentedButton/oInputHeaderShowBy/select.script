@@ -1,0 +1,3 @@
+modelAppControl.getData().filter.folder = oEvent.getParameter("key");
+modelAppControl.refresh();
+applyFilterToTree();

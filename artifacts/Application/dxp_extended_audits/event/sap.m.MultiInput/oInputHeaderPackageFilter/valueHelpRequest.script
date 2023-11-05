@@ -1,0 +1,8 @@
+sap.n.Planet9.openPackageDialog(loPackageList => {
+    let loPackages = [];
+    for (let loPack of loPackageList) {
+        loPackages.push(loPack.id);
+    }
+    sap.n.storage.setWorkspacePackages(loPackages);
+    sap.n.Planet9.applyWorkspacePackages(oInputHeaderPackageFilter);
+}, "MultiSelect")

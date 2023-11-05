@@ -1,0 +1,20 @@
+{
+	"id": "3894fb63-7d77-476e-8fc8-ebfc3281b0f2",
+	"createdAt": "2023-10-09T17:57:39.835Z",
+	"createdBy": "paulo.reis.rosa@neptune-software.com",
+	"globalScripts": [],
+	"externalModules": [],
+	"entitySets": [],
+	"apis": [],
+	"name": "getArtifacts",
+	"ver": "23.11.1.217",
+	"description": "get all users, roles, groups and relations",
+	"content": "file:///content.ts",
+	"useAsGlobalScript": false,
+	"transpiledContent": "file:///transpiledContent.ts",
+	"lastRunSuccessful": true,
+	"isTypescript": false,
+	"language": "typescript",
+	"jsscriptGroup": "d4641218-e3a3-4a1d-943c-e8592e346b19",
+	"package": "5551ecd0-9c10-4fc0-9646-bcd8792112cc"
+}

@@ -1,0 +1,14 @@
+const loFilterValue = oFilterSearchAuditResultsLeft.getValue();
+const loBinding = oTableSearchAuditResults.getBinding("items");
+const loFilter = new sap.ui.model.Filter({
+    filters: [
+        new sap.ui.model.Filter("action"    , "Contains", loFilterValue),
+        new sap.ui.model.Filter("content"   , "Contains", loFilterValue),
+        new sap.ui.model.Filter("objectName", "Contains", loFilterValue),
+        new sap.ui.model.Filter("changedBy" , "Contains", loFilterValue),
+        new sap.ui.model.Filter("createdAt" , "Contains", loFilterValue),
+        new sap.ui.model.Filter("updatedAt" , "Contains", loFilterValue)
+    ],
+    and: false
+})
+loBinding.filter([loFilter]);

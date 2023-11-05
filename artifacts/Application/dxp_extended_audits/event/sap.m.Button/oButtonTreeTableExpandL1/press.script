@@ -1,0 +1,3 @@
+//
+new Promise(ok=>ok()).then(() => oTreeTable.expandToLevel(1));
+oTreeTable.collapseAll();

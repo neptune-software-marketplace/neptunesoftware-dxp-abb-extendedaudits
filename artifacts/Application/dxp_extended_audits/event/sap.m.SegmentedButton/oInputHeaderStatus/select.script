@@ -1,0 +1,3 @@
+modelAppControl.getData().filter.status = oEvent.getParameter("key");
+modelAppControl.refresh();
+applyFilterToTree();

@@ -1,0 +1,9 @@
+{
+	"id": "3594aa7c-786c-4359-b81b-f4d57e6e55af",
+	"createdAt": "2023-10-30T15:59:58.278Z",
+	"createdBy": "paulo.reis.rosa@neptune-software.com",
+	"name": "dxp_extended_audits",
+	"description": "Role for the Extended Audits app",
+	"ver": "23.10.30.1559",
+	"package": "5551ecd0-9c10-4fc0-9646-bcd8792112cc"
+}

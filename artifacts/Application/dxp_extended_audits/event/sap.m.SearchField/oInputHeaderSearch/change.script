@@ -1,0 +1,3 @@
+modelAppControl.getData().filter.search = oEvent.getParameter("value");
+modelAppControl.refresh();
+applyFilterToTree();

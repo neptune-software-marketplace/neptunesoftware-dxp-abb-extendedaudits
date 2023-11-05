@@ -1,0 +1,16 @@
+.nepMarginMicro {
+  margin: 2px;
+}
+
+.nepMarginMini {
+  margin: 3px;
+}
+
+.nepWidth100perc {
+  width: 100%;
+}
+
+.sapUiLoSplitter.sapUiLoSplitterV > .sapUiLoSplitterBar,
+.sapUiLoSplitter.sapUiLoSplitterV > .sapUiLoSplitterOverlay .sapUiLoSplitterOverlayBar {
+  height: 1rem !important;
+}

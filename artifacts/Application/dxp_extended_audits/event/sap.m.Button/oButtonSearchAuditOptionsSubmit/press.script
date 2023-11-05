@@ -1,0 +1,13 @@
+let loWhereRequested = [];
+
+for (let loSelectionEntry of modelDataSelectionScreen.getData().selection) {
+    let loHarmonizedEntries = harmonizeBundleToMultipleSingleEntries(loSelectionEntry);
+    loWhereRequested = loWhereRequested.concat(loHarmonizedEntries);
+}
+
+let loOptionsAuditLogRequest = {
+    data: {
+        "where": loWhereRequested,
+    }
+}
+apiGetAuditLog(loOptionsAuditLogRequest);

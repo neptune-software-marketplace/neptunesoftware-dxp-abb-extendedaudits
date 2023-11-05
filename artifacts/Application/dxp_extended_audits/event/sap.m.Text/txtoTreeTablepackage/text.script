@@ -1,0 +1,6 @@
+if (typeof package === "undefined" || package === null || package === "") { return; }
+// TODO: packages  
+let loPackage = ModelData.FindFirst(modelDataPackages.getData().result.packages, "id", package);
+if (loPackage) {
+    return loPackage.name;
+}

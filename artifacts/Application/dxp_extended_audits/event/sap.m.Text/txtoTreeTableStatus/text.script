@@ -1,0 +1,24 @@
+let lvStatus = [];
+//
+// Only relevant for users
+if (objectType !== 'user') { return; }
+
+if (locked) { 
+    lvStatus.push(txtUserStatusLocked.getText()) 
+    if (!active) {
+        lvStatus.push(txtUserStatusInactive.getText())
+    }
+}
+else if (active) { 
+    lvStatus.push(txtUserStatusActive.getText()) 
+} 
+else { 
+    lvStatus.push(txtUserStatusInactive.getText()) 
+}
+// //
+// // Possible states' output:
+//     Locked
+//     Locked;Inactive
+//     Active
+//     Inactive
+return lvStatus.join(";");

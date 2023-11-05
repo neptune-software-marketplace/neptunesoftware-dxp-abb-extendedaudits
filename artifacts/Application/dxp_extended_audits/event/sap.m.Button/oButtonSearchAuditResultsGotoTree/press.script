@@ -1,0 +1,9 @@
+const loSelectedItem = oTableSearchAuditResults.getSelectedItem();
+
+if (loSelectedItem) {
+    const loContext = loSelectedItem.getBindingContext("DataAuditLogResponse");
+    const loData = loContext.getObject();
+    resetFiltersInMainScreen( {search: loData.objectKey} );
+    oButtonTreeTableExpandAll.firePress();   
+    oDiaSearchAuditLog.close();
+}

@@ -1,0 +1,14 @@
+if (modelDataSelectionScreen.getData().selection.length === 1 ) {
+    // There is only one item. Clear it
+    modelDataSelectionScreen.setData( { "selection": [{}]} );
+    return;
+}
+
+const loContext = oEvent.getSource().getBindingContext("DataSelectionScreen");
+const lvPath = Number.parseInt(loContext.getPath().match(/(\d+)$/)[0]);
+if (isNaN(lvPath)) {
+    sap.m.MessageToast.show(txtNoIndexFound.getText());
+    return;
+}
+modelDataSelectionScreen.getData().selection.splice(lvPath,1);
+modelDataSelectionScreen.refresh();

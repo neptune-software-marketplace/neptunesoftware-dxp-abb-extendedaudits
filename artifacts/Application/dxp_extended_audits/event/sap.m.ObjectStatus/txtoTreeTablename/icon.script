@@ -1,0 +1,10 @@
+switch(objectType) {
+    case C_TYPE_FOLDER:
+        return 'sap-icon://folder-blank';
+    case C_TYPE_GROUP:
+        return 'sap-icon://group';
+    case C_TYPE_ROLE:
+        return 'sap-icon://role';
+    case C_TYPE_USER:
+        return 'sap-icon://person-placeholder';
+}

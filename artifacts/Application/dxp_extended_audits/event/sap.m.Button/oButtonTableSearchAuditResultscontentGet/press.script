@@ -1,0 +1,5 @@
+const loContext = oEvent.oSource.getBindingContext("DataAuditLogResponse");  
+const loData = loContext.getObject();
+if (!oDiaJsonDisplay.CUST) { oDiaJsonDisplay.CUST = {}};
+oDiaJsonDisplay.CUST.data = (loData?.content) ? loData.content : "";
+oDiaJsonDisplay.open();

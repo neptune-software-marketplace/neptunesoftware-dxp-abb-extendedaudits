@@ -1,0 +1,20 @@
+{
+	"id": "2b245c55-3643-4a5b-9f8f-95779aa6b846",
+	"createdAt": "2023-10-13T08:45:47.908Z",
+	"createdBy": "paulo.reis.rosa@neptune-software.com",
+	"globalScripts": [],
+	"externalModules": [],
+	"entitySets": [],
+	"apis": [],
+	"name": "getAuditLog",
+	"ver": "23.10.31.1452",
+	"description": null,
+	"content": "file:///content.ts",
+	"useAsGlobalScript": false,
+	"transpiledContent": "file:///transpiledContent.ts",
+	"lastRunSuccessful": true,
+	"isTypescript": false,
+	"language": "typescript",
+	"jsscriptGroup": "d4641218-e3a3-4a1d-943c-e8592e346b19",
+	"package": "5551ecd0-9c10-4fc0-9646-bcd8792112cc"
+}

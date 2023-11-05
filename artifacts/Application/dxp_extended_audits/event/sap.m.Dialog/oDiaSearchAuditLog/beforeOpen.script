@@ -1,0 +1,19 @@
+if (!(Array.isArray(modelDataSelectionScreen.getData()?.selection) && modelDataSelectionScreen.getData()?.selection.length)) {
+    modelDataSelectionScreen.setData({
+        "selection": [ {} ]
+    });
+}
+
+let loKeys = [ {"key": "New", "text": txtLiteralNew.getText()} ];
+for(let loArtifact of modelDataArtifactsAndRelations.getData().result.artifacts) {
+    if (!loArtifact.objectKey) {continue;}
+    loKeys.push({
+        "key": loArtifact.objectKey,
+        "text": loArtifact.name
+    })
+}
+modelAppControl.setSizeLimit(loKeys.length);
+modelAppControl.getData().keys = loKeys;
+modelAppControl.refresh();
+oTableSearchAuditResults.removeSelections();
+if (typeof oSplitterSearchAudit?.rerender == "function") { oSplitterSearchAudit.rerender(); }

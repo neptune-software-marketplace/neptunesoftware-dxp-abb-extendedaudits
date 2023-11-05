@@ -1,0 +1,13 @@
+//
+try {
+    let loTreeData = buildTreeTable( 
+        modelDataArtifactsAndRelations.getData().result.artifacts, 
+        modelDataArtifactsAndRelations.getData().result.relations, 
+        goRelationsTexts );
+    modelDataArtifactsInTree.setData(loTreeData);
+    applyFilterToTree();
+//    console.log(loTreeData);
+}
+finally {
+    setBusy( false, oSplitterPageStart );
+}

@@ -1,0 +1,93 @@
+{
+	"id": "5551ecd0-9c10-4fc0-9646-bcd8792112cc",
+	"createdAt": "2023-10-30T15:14:49.858Z",
+	"createdBy": "paulo.reis.rosa@neptune-software.com",
+	"git": {
+		"remote": "https://github.com/neptune-software-marketplace/neptunesoftware-dxp-abb-extendedaudits"
+	},
+	"name": "neptunesoftware-dxp-abb-extendedaudits",
+	"description": "Extended Audits",
+	"ver": "23.11.5.1354",
+	"enableCICD": true,
+	"apps": [
+		{
+			"id": "5c702b87-3a1e-4b4a-88ce-1988c69342e6",
+			"application": "dxp_extended_audits",
+			"title": "",
+			"description": "",
+			"package": {
+				"id": "5551ecd0-9c10-4fc0-9646-bcd8792112cc"
+			}
+		}
+	],
+	"api": [
+		{
+			"id": "f60fdeb0-8cc5-4332-815a-a9793824d7d8",
+			"name": "dxp_extended_audits",
+			"description": "Extended Audits API",
+			"apiGroup": null
+		}
+	],
+	"odataSource": [],
+	"odataMock": [],
+	"dictionary": [],
+	"jsclass": [
+		{
+			"id": "3894fb63-7d77-476e-8fc8-ebfc3281b0f2",
+			"name": "getArtifacts",
+			"description": "get all users, roles, groups and relations"
+		},
+		{
+			"id": "2b245c55-3643-4a5b-9f8f-95779aa6b846",
+			"name": "getAuditLog",
+			"description": null
+		}
+	],
+	"jsscript_group": [
+		{
+			"id": "d4641218-e3a3-4a1d-943c-e8592e346b19",
+			"name": "ExtendedAudits",
+			"description": ""
+		}
+	],
+	"theme": [],
+	"pdf": [],
+	"rulesengine": [],
+	"reports": [],
+	"api_authentication": [],
+	"api_group": [],
+	"tile": [
+		{
+			"id": "b66fbedf-236e-465b-a6a8-fd5815c3750e",
+			"description": "View reports for system configurations",
+			"name": "dxp_extended_audits"
+		}
+	],
+	"category": [
+		{
+			"id": "1f2886bc-a791-47c5-be37-b8d2696a7e7f",
+			"description": null,
+			"name": "dxp_extended_audits"
+		}
+	],
+	"launchpad": [],
+	"certificates": [],
+	"role": [
+		{
+			"id": "3594aa7c-786c-4359-b81b-f4d57e6e55af",
+			"name": "dxp_extended_audits",
+			"description": "Role for the Extended Audits app"
+		}
+	],
+	"systems": [],
+	"doc": [],
+	"wf_notifications": [],
+	"department": [],
+	"script_scheduler": [],
+	"wf_definition": [],
+	"connector": [],
+	"events": [],
+	"code_snippets": [],
+	"wf_determination": [],
+	"wf_taskaction": []
+}
