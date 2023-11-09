@@ -127,17 +127,7 @@ if (Array.isArray(loWhere) && loWhere.length) {
                 loFieldsUserActivity.push(`"userID" = '${loWhereItem.objectKey}'`);
             }
         }
-        if (loWhereItem?.action
-            &&
-            (!(
-                ['User'].includes(loWhereItem?.objectType)
-                &&
-                canTargetUserActivity([loWhereItem], true /* STRICT */)
-            ))
-        ) {
-            // add the action only if NOT (user activity AND type is 'User')
-            loFieldsAudit.push(`"action" = '${loWhereItem.action}'`);
-        }
+        if (loWhereItem?.action) { loFieldsAudit.push(`"action" = '${loWhereItem.action}'`); }
         if (loWhereItem?.changedBy) { 
             loFieldsAudit.push(`"changedBy" = '${loWhereItem.changedBy}'`); 
             if ( canTargetUserActivity([loWhereItem], false /* NOT strict */) ) {
@@ -192,6 +182,7 @@ else {
 let lvAuditWhere = loQueryAudit.join(' OR ');
 // console.log('Generated query:', lvAuditWhere);
 let lvSelect = `SELECT * FROM audit_log WHERE ${lvAuditWhere} ORDER BY "updatedAt" DESC`;
+log.debug("Audit select:", lvSelect);
 
 const loResult = await p9.manager.query( lvSelect );
 // for (let loRow of loResult) {
@@ -220,7 +211,7 @@ if ( loQueryUserActivity.length ) {
     let lvUserActivitySelect = lvUserActivityWhere.match(/^\(\s*\)$/)
                                 ? `SELECT * FROM user_activity`
                                 : `SELECT * FROM user_activity WHERE ${lvUserActivityWhere}`;
-    // console.log("QUERY", { query: lvUserActivitySelect});
+    log.debug("User activity select:", lvUserActivitySelect);
     const loUserActivityResult = await p9.manager.query( lvUserActivitySelect );
     // console.log(loUserActivityResult);
     if (Array.isArray(loUserActivityResult) && loQueryUserActivity.length) {

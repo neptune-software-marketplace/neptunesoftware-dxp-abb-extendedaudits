@@ -3478,6 +3478,20 @@
 																	"translation": []
 																},
 																{
+																	"attribute": "growingThreshold",
+																	"grouping": "Properties",
+																	"value": "100",
+																	"script": "",
+																	"translation": []
+																},
+																{
+																	"attribute": "growing",
+																	"grouping": "Properties",
+																	"value": "true",
+																	"script": "",
+																	"translation": []
+																},
+																{
 																	"attribute": "sticky",
 																	"grouping": "Properties",
 																	"value": "[\"ColumnHeaders\",\"HeaderToolbar\",\"InfoToolbar\"]",
@@ -5217,7 +5231,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.11.3.435",
+	"ver": "23.11.8.193",
 	"application": "dxp_extended_audits",
 	"title": "",
 	"description": "",

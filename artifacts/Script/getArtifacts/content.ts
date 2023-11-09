@@ -17,7 +17,7 @@ const goAllRoles = await goManager.query(
 const goAllUsers = await goManager.query(
     `SELECT 'User' as "objectType", id as "objectKey",
             username as name, name as description, (null) as package,
-            locked,array_to_string(ARRAY['BD:'||begins, 'ED:'||ends], ';') as active,
+            locked, begins, ends, (null) as active,
             "createdAt", "createdBy", "updatedAt", "changedBy"
         FROM users`);
 const goAllUsersXRoles = await goManager.query(
@@ -42,25 +42,18 @@ console.log('Total roles x groups:', (goAllRolesXGroups) ? goAllRolesXGroups.len
 //
 // Calculates the begin and end date to determine if active or not
 let goToday = new Date( new Date().toISOString().slice(0,10) );
-for (let lvRow of goAllUsers) {
-    if ((typeof lvRow.active !== "string") || (lvRow.active.trim() === '')) {
-        lvRow.active = true;
-        continue;
-    }
-    const lcRegExBegin = /BD:(.*?)(;|$)/;
-    const lcRegExEnd = /ED:(.*?)(;|$)/;
-    let loBeginDate = (lvRow.active.match(lcRegExBegin))
-                        ? new Date(lvRow.active.match(lcRegExBegin)[0].slice(3,13))
+for (let loRow of goAllUsers) {
+    let loBeginDate = (loRow.begins)
+                        ? loRow.begins
                         : new Date('1900-01-01');
-    let loEndDate = (lvRow.active.match(lcRegExEnd))
-                        ? new Date(lvRow.active.match(lcRegExEnd)[0].slice(3,13))
+    let loEndDate = (loRow.ends)
+                        ? loRow.ends
                         : new Date('9999-12-31');
-    lvRow.active = ((loBeginDate.getTime() <= goToday.getTime()) && 
+    loRow.active = ((loBeginDate.getTime() <= goToday.getTime()) && 
                     (goToday.getTime() <= loEndDate.getTime()))
                         ? true
                         : false;
 }
-
 /*
 console.log('users x roles:', (goAllUsersXRoles));
 console.log('users x groups:', (goAllUsersXGroups));
