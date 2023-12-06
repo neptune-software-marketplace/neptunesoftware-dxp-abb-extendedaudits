@@ -74,7 +74,7 @@ loWhere = [
     // { objectType: "User", action: "Activity", beginDate: "2023-11-10", content: "Logon" },
 ]
 /* */
-console.log('Calculating query...');
+// console.log('Calculating query...')
 var C_ONE_DAY = 24 * 60 * 60 * 1000; // amount of milliseconds in a day
 var canTargetUserActivity = function (poWhereCond, pvStrictAction) {
     if (Array.isArray(poWhereCond)) {
@@ -302,7 +302,7 @@ if (Array.isArray(loWhere) && loWhere.length) {
         if (loWhereItem === null || loWhereItem === void 0 ? void 0 : loWhereItem.content) {
             var loSearchExpression = resolveExpression(loWhereItem.content);
             if (typeof loSearchExpression === "string") {
-                console.log({ contentSingle: loWhereItem === null || loWhereItem === void 0 ? void 0 : loWhereItem.content });
+                // console.log({ contentSingle: loWhereItem?.content });
                 loFieldsAudit.push("\"content\" LIKE '%".concat(loSearchExpression, "%'"));
                 if (canTargetUserActivity([loWhereItem], false)) {
                     loFieldsUserActivity.push("( ".concat([
@@ -313,7 +313,7 @@ if (Array.isArray(loWhere) && loWhere.length) {
                 }
             }
             else {
-                console.log({ contentComplex: loWhereItem === null || loWhereItem === void 0 ? void 0 : loWhereItem.content });
+                // console.log({ contentComplex: loWhereItem?.content });
                 loFieldsAudit.push(buildWildcardCondition('content', loSearchExpression));
                 if (canTargetUserActivity([loWhereItem], false)) {
                     var loSearchStrings = buildSearchStringsFromOperation(loSearchExpression, true);
@@ -347,7 +347,7 @@ else {
 }
 ;
 var lvAuditWhere = loQueryAudit.join(' OR ');
-console.log('Generated query:', lvAuditWhere);
+// console.log('Generated query:', lvAuditWhere);
 var lvSelect = "SELECT * FROM audit_log WHERE ".concat(lvAuditWhere, " ORDER BY \"updatedAt\" DESC");
 // log.debug("Audit select:", lvSelect);
 var loResult = await p9.manager.query(lvSelect);
@@ -401,7 +401,7 @@ if (loQueryUserActivity.length) {
                 "objectName": (_e = loIdUsernameRelation[loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.userID]) === null || _e === void 0 ? void 0 : _e.name
             }, loResult);
         }
-        console.log(loResult);
+        // console.log(loResult);        
     }
 }
 else {

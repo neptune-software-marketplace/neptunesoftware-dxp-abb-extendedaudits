@@ -25,7 +25,7 @@ if (!loArtifact) {
     complete()
     return;
 }
-console.log(loArtifact);
+// console.log(loArtifact);
 
 result.data = {
     result: {

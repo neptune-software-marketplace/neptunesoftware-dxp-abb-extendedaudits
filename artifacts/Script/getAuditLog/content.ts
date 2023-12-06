@@ -40,7 +40,7 @@ loWhere = [
 ]
 /* */
 
-console.log('Calculating query...')
+// console.log('Calculating query...')
 const C_ONE_DAY = 24*60*60*1000; // amount of milliseconds in a day
 
 const canTargetUserActivity = ( poWhereCond, pvStrictAction ) => {
@@ -240,7 +240,7 @@ if (Array.isArray(loWhere) && loWhere.length) {
         if (loWhereItem?.content) {
             let loSearchExpression = resolveExpression( loWhereItem.content );
             if (typeof loSearchExpression === "string" ) {
-                console.log({ contentSingle: loWhereItem?.content });
+                // console.log({ contentSingle: loWhereItem?.content });
                 loFieldsAudit.push(`"content" LIKE '%${loSearchExpression}%'`);
                 if (canTargetUserActivity([loWhereItem], false)) {
                     loFieldsUserActivity.push(`( ${
@@ -253,7 +253,7 @@ if (Array.isArray(loWhere) && loWhere.length) {
                 }
             }
             else {
-                console.log({ contentComplex: loWhereItem?.content });
+                // console.log({ contentComplex: loWhereItem?.content });
                 loFieldsAudit.push( buildWildcardCondition( 'content', loSearchExpression ) );
                 if (canTargetUserActivity([loWhereItem], false)) {
                     let loSearchStrings = buildSearchStringsFromOperation(loSearchExpression, true);
@@ -288,7 +288,7 @@ else {
 };
 
 let lvAuditWhere = loQueryAudit.join(' OR ');
-console.log('Generated query:', lvAuditWhere);
+// console.log('Generated query:', lvAuditWhere);
 let lvSelect = `SELECT * FROM audit_log WHERE ${lvAuditWhere} ORDER BY "updatedAt" DESC`;
 // log.debug("Audit select:", lvSelect);
 
@@ -343,7 +343,7 @@ if ( loQueryUserActivity.length ) {
                 "objectName": loIdUsernameRelation[loUserActivity?.userID]?.name
             }, loResult);
         }
-        console.log(loResult);        
+        // console.log(loResult);        
     }
 }
 else {
