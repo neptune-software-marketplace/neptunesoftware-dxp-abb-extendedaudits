@@ -1,7 +1,3 @@
-const C_TYPE_FOLDER = 'Folder';
-const C_TYPE_GROUP = 'Department';
-const C_TYPE_ROLE = 'Role';
-const C_TYPE_USER = 'User';
 function buildTreeTable( poArtifacts, poRelations, poTexts ) {
     modelDataPackageFltercrumbs.setData({relations:[]});
     if (!Array.isArray(poArtifacts)) {
@@ -57,6 +53,8 @@ function buildNLevelChildren(poNode, poArtifacts, poRelations, poRoot) {
                     let loChildFound = ModelData.FindFirst(poArtifacts, ["objectType", "objectKey"], [C_TYPE_ROLE, loRel[C_TYPE_ROLE]]);
                     if (typeof loChildFound === "object") {
                         loChildFound = $.extend(true, {}, loChildFound);
+                        loChildFound.locked = poNode.locked;
+                        loChildFound.active = poNode.active;
                         loChildFound.root=poRoot;
                         loChildFound.parentKey = poNode.objectKey;
                         loChildFound.filtercrumb = `${poNode.filtercrumb}-${lvCrumbIndex++}`;
@@ -93,6 +91,8 @@ function buildNLevelChildren(poNode, poArtifacts, poRelations, poRoot) {
                     let loChildFound = ModelData.FindFirst(poArtifacts, ["objectType", "objectKey"], [C_TYPE_GROUP, loRel[C_TYPE_GROUP]]);
                     if (typeof loChildFound === "object") {
                         loChildFound = $.extend(true, {}, loChildFound);
+                        loChildFound.locked = poNode.locked;
+                        loChildFound.active = poNode.active;
                         loChildFound.root=poRoot;
                         loChildFound.parentKey = poNode.objectKey;
                         loChildFound.filtercrumb = `${poNode.filtercrumb}-${lvCrumbIndex++}`;
@@ -129,6 +129,8 @@ function buildNLevelChildren(poNode, poArtifacts, poRelations, poRoot) {
                     let loChildFound = ModelData.FindFirst(poArtifacts, ["objectType", "objectKey"], [C_TYPE_GROUP, loRel[C_TYPE_GROUP]]);
                     if (typeof loChildFound === "object") {
                         loChildFound = $.extend(true, {}, loChildFound);
+                        loChildFound.locked = poNode.locked;
+                        loChildFound.active = poNode.active;
                         loChildFound.root=poRoot;
                         loChildFound.parentKey = poNode.objectKey;
                         loChildFound.filtercrumb = `${poNode.filtercrumb}-${lvCrumbIndex++}`;
@@ -149,6 +151,8 @@ function buildNLevelChildren(poNode, poArtifacts, poRelations, poRoot) {
                     let loChildFound = ModelData.FindFirst(poArtifacts, ["objectType", "objectKey"], [C_TYPE_ROLE, loRel[C_TYPE_ROLE]]);
                     if (typeof loChildFound === "object") {
                         loChildFound = $.extend(true, {}, loChildFound);
+                        loChildFound.locked = poNode.locked;
+                        loChildFound.active = poNode.active;
                         loChildFound.root=poRoot;
                         loChildFound.parentKey = poNode.objectKey;
                         loChildFound.filtercrumb = `${poNode.filtercrumb}-${lvCrumbIndex++}`;

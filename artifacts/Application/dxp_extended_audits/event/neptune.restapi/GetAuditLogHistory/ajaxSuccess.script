@@ -1,0 +1,24 @@
+//
+// The audit data has arrived. add it to the global structure
+// console.log('@getArtifactsAndRelation-success:', xhr.status);
+goArtifactHistoryObjectResponse = {};
+if (Array.isArray(xhr.responseJSON?.result?.audit) && xhr.responseJSON.result.audit.length) {
+    goArtifactHistoryAuditResponse = xhr.responseJSON.result.audit;
+    // Sort by updatedAt DESC
+    goArtifactHistoryAuditResponse.sort((poArtifactA, poArtifactB) => new Date(poArtifactB.updatedAt) - new Date(poArtifactA.updatedAt));
+    for (let loArtifact of goArtifactHistoryAuditResponse) {
+        if (typeof loArtifact.content !== "object") { loArtifact.content = JSON.parse(loArtifact.content); }
+    }
+}
+else {
+    goArtifactHistoryAuditResponse = [];
+}
+// Get the actual object;
+let options = {
+    parameters: {
+        "objectKey": goArtifactHistoryRequest.objectKey, // Required 
+        "objectType": goArtifactHistoryRequest.objectType // Required 
+    }
+};
+
+apigetArtifactAndRelations(options);

@@ -1,35 +1,3 @@
-const setBusyQueue = {}; 
-function setBusy( pvState, poObject, pvDelay ) {
-    const C_GLOBAL = '_';
-    let lvObjName = (poObject instanceof sap.ui.core.Control) ? poObject.getId() : C_GLOBAL;
-    if (!setBusyQueue[lvObjName]) {setBusyQueue[lvObjName] = 0;}
-    let lvDelay = (isNaN(Number.parseInt(pvDelay)) || (pvDelay < 0)) ? 0 : Number.parseInt(pvDelay);
-    let lvState = !!(pvState);
-    if (poObject instanceof sap.ui.core.Control) {
-        // act?
-        if (
-            (pvState && !setBusyQueue[lvObjName]) /* ...... setBusy=true AND first enqueue */
-            ||
-            ((!pvState) && (setBusyQueue[lvObjName]<=1)) /* setBusy=false AND last dequeue */
-        ) {
-            poObject.setBusyIndicatorDelay( lvDelay );
-            poObject.setBusy( lvState );
-        }
-    }
-    else if ( lvState ) {
-        if (!setBusyQueue[lvObjName]) { /* setBusy=true AND first enqueue */
-            sap.ui.core.BusyIndicator.show( lvDelay );
-        }
-    }
-    else {
-        if (setBusyQueue[lvObjName]<=1) { /* setBusy=false AND last enqueue */
-            sap.ui.core.BusyIndicator.hide(); 
-        }
-    }
-    // progress enqueue/dequeue
-    setBusyQueue[lvObjName] = (lvState) ? setBusyQueue[lvObjName]+1 : setBusyQueue[lvObjName]-1;
-}
-
 function getSAPDateTimeString( poDateValue ) {
     let loDate;
     try {
@@ -37,7 +5,7 @@ function getSAPDateTimeString( poDateValue ) {
     }
     catch(e) { }
     if ((!loDate) || !(loDate instanceof Date) || isNaN(loDate)) { return ''; } // Not a valid date. Returns empty
-    let lvDateString = loDate.toISOString().replace("T", " ").slice(0,19);
+    let lvDateString = getLocalISOString(loDate).replace("T", " ").slice(0,19);
     let lvDay = lvDateString.slice(8,10);
     let lvMonth = lvDateString.slice(5,7);
     let lvYear = lvDateString.slice(0,4);
@@ -48,9 +16,9 @@ function harmonizeBundleToMultipleSingleEntries( poSelectionEntry ) {
     // Harmonize objectType
     if (!(poSelectionEntry.objectType || poSelectionEntry?.objectTypeMany?.length)) {
         return []
-            .concat(harmonizeBundleToMultipleSingleEntries($.extend(true,{},poSelectionEntry,{objectType:'Department'})))
-            .concat(harmonizeBundleToMultipleSingleEntries($.extend(true,{},poSelectionEntry,{objectType:'Role'})))
-            .concat(harmonizeBundleToMultipleSingleEntries($.extend(true,{},poSelectionEntry,{objectType:'User'})));
+            .concat(harmonizeBundleToMultipleSingleEntries($.extend(true,{},poSelectionEntry,{objectType:C_TYPE_GROUP})))
+            .concat(harmonizeBundleToMultipleSingleEntries($.extend(true,{},poSelectionEntry,{objectType:C_TYPE_ROLE})))
+            .concat(harmonizeBundleToMultipleSingleEntries($.extend(true,{},poSelectionEntry,{objectType:C_TYPE_USER})));
     }
     else if ((!poSelectionEntry.objectType) && Array.isArray(poSelectionEntry?.objectTypeMany) && poSelectionEntry?.objectTypeMany?.length) {
         let loHarmonizedEntries = [];
@@ -111,10 +79,28 @@ function resetFiltersInMainScreen( poOptions ) {
 
     modelAppControl.getData().filter = {
         search:  oInputHeaderSearch.getValue(),
-        package: sap.n.storage.getWorkspacePackages(),
+        package: (sap?.n?.storage?.getWorkspacePackages) ? sap.n.storage.getWorkspacePackages() : [],
         showBy:  oInputHeaderShowBy.getSelectedKey(),
         status:  oInputHeaderStatus.getSelectedKey()
     }
     modelAppControl.refresh();
     applyFilterToTree();
+}
+
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+        /[xy]/g, 
+        function(c) {
+            var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        }
+    );
+}
+function getLocalISOString( poDate ) {
+    let loDate = poDate;
+    if (typeof loDate === "string") { loDate = new Date(loDate); }
+    if (loDate instanceof Date && !isNaN(loDate)) {
+        return `${loDate.getFullYear()}-${`0${loDate.getMonth()+1}`.slice(-2)}-${`0${loDate.getDate()}`.slice(-2)}T${`0${loDate.getHours()}`.slice(-2)}:${`0${loDate.getMinutes()}`.slice(-2)}:${`0${loDate.getSeconds()}`.slice(-2)}.${`00${loDate.getMilliseconds()}`.slice(-3)}Z`;
+    }
+    return poData;
 }

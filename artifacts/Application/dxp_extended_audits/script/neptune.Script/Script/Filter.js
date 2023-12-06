@@ -42,7 +42,7 @@ function applyFilterToTree() {
         }
     }
 
-    if (['group', 'role', 'user'].includes(loFilterSettings?.folder)) {
+    if (['department', 'role', 'user'].includes(loFilterSettings?.folder)) {
         loMainFilter.push(new sap.ui.model.Filter("root", "EQ", loFilterSettings?.folder));
     }
 

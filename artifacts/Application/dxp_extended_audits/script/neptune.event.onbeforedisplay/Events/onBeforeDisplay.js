@@ -1,6 +1,6 @@
 let loCurrentMultiInput = sap.ui.getCore().byId(APPVIEW.createId("oInputHeaderPackageFilter"));
 
-let loPackageIds = Array.isArray(sap.n.storage.getWorkspacePackages()) ? $.extend( true, [], sap.n.storage.getWorkspacePackages() ) : [];
+let loPackageIds = Array.isArray((sap?.n?.storage?.getWorkspacePackages) ?sap.n.storage.getWorkspacePackages() :null) ? $.extend( true, [], sap.n.storage.getWorkspacePackages() ) : [];
 if (!loPackageIds.length) {
     When.promise(() => Array.isArray(modelAppControl.getData()?.filter?.package) ? 1 : 0).then(() => {
         loCurrentMultiInput.removeAllTokens();

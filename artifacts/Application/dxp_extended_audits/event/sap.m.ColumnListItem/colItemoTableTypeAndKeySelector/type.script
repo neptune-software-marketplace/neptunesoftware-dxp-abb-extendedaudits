@@ -1,0 +1,22 @@
+if (typeof type === "undefined" || type === null || type === "") { return; }  
+let lvGroupsEnabled = !!toggletypeAndKeygroup;
+let lvRolesEnabled = !!toggletypeAndKeyrole;
+let lvUsersEnabled = !!toggletypeAndKeyuser;
+
+let loCheckSelect = sap.ui.getCore().byId(`${this.sId}-selectMulti`);
+switch(type) {
+    case C_TYPE_GROUP:
+        if ( loCheckSelect ) loCheckSelect.setEnabled( lvGroupsEnabled || !(lvGroupsEnabled || lvRolesEnabled || lvUsersEnabled) );
+        break;
+    case C_TYPE_ROLE:
+        if ( loCheckSelect ) loCheckSelect.setEnabled( lvRolesEnabled || !(lvGroupsEnabled || lvRolesEnabled || lvUsersEnabled) );
+        break;
+    case C_TYPE_USER:
+        if ( loCheckSelect ) loCheckSelect.setEnabled( lvUsersEnabled || !(lvGroupsEnabled || lvRolesEnabled || lvUsersEnabled) );
+        break;
+}
+if (loCheckSelect && (!loCheckSelect.getEnabled()) && this.getSelected()) {
+    modelAppControl.getData().messageStrip.typeAndKey.visible = true;
+    modelAppControl.refresh();
+}
+return;

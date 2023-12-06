@@ -2,4 +2,4 @@ if (typeof updatedAt === "undefined" || updatedAt === null || updatedAt === "") 
 var loFormattedText = new Date(updatedAt);
 if (isNaN(loFormattedText.getTime())) return;
  
-return loFormattedText.toISOString().slice(0,19).replace('T', ' ');
+return getLocalISOString(loFormattedText).slice(0,19).replace('T', ' ');

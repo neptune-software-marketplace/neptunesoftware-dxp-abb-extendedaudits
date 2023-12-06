@@ -1,0 +1,12 @@
+//
+// debugger;
+// console.log("@GetAuditLogCrossRef.ajaxSuccess:", this.data);
+let loData = (typeof this.data === "object") 
+                ? loData
+                : (typeof this.data === "string")
+                    ? JSON.parse(this.data)
+                    : this.data;
+if (loData && loData.sourceKey) {
+    ArtifactHistoryCrossReference.applyData(loData.sourceKey, (Array.isArray(xhr.responseJSON?.result?.audit)) ?xhr.responseJSON.result.audit : []);
+} 
+setBusy( false, oTabDetailPages );

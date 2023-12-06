@@ -5,11 +5,17 @@ if (!(Array.isArray(modelDataSelectionScreen.getData()?.selection) && modelDataS
 }
 
 let loKeys = [ {"key": "New", "text": txtLiteralNew.getText()} ];
+let loTypeDisplay = {};
+loTypeDisplay[C_TYPE_GROUP] = txtLiteralGroup.getText();
+loTypeDisplay[C_TYPE_ROLE] = txtLiteralRole.getText();
+loTypeDisplay[C_TYPE_USER] = txtLiteralUser.getText();
 for(let loArtifact of modelDataArtifactsAndRelations.getData().result.artifacts) {
     if (!loArtifact.objectKey) {continue;}
     loKeys.push({
         "key": loArtifact.objectKey,
-        "text": loArtifact.name
+        "text": loArtifact.name,
+        "type": loArtifact.objectType,
+        "typeDisplay": loTypeDisplay[loArtifact.objectType]
     })
 }
 modelAppControl.setSizeLimit(loKeys.length);

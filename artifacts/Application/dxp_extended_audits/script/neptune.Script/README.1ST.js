@@ -4,6 +4,7 @@
         APIs
         oTreeData
         User status 
+        ArtifactPropagation
 
     setBusy
         Custom function in script 'Functions'
@@ -76,5 +77,33 @@
             'Active'           : The user is active and NOT locked
             'Inactive'         : The user is outside of a valid period
             'Locked'           : The user is active AND locked
-            'Locked;Inactive'  : The user is inactive AND locked
+
+    ArtifactPropagation
+        SEE: resource folder "ArtifactPropagationEventHandlers"
+        
+        When selecting an artifact, it is possible to open on the right side a history page, where the history of the changes to that
+        artifact can be seen.
+
+        The intention is to enhance this tool with more functionalities for information/interaction with artifacts in the future, 
+        therefore the idea of tabbed pages was created. A future functionality will occupy its own tab in the right side.
+
+        But as each new functionility is created, more than one set of data will be necessary, and all pages need to be notified
+        when a new artifact is selected.
+
+        The ArtifactPropagation, will send that information to all the pages that subscribe to it.
+
+        Every page needs to execute ArtifactPropagation.subscribe( pvPageId, pfOnSelectArtifact ):
+            Parameters:
+                pvPageId: id (string) of the page subscribing
+                pfOnSelectArtifact: handler (function) for the event on the page subscribing
+                    On this event function the "poData" parameter is passed with the basic artifact information 
+                    (the same from the row in the Tree Table).
+            NOTE: repeating a subscription for the same pageId, will overwrite the handler function
+
+            Inside handler, the page is responsible to use poData to refresh its contents
+
+            use setBusy( true/false, page ) to individually give a busy state information without locking the other pages.
+                REMEMBER: setBusy uses a enqueue/dequeue system, so make sure to setBusy:false for each setBusy:true done on 
+                          the same object.
+        
 */

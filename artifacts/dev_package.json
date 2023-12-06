@@ -7,7 +7,7 @@
 	},
 	"name": "neptunesoftware-dxp-abb-extendedaudits",
 	"description": "Extended Audits",
-	"ver": "23.11.9.933",
+	"ver": "23.12.6.2016",
 	"enableCICD": true,
 	"apps": [
 		{
@@ -32,6 +32,11 @@
 	"odataMock": [],
 	"dictionary": [],
 	"jsclass": [
+		{
+			"id": "4d5a24d9-bd72-4977-8826-ff514f941449",
+			"name": "getArtifactAndRelations",
+			"description": null
+		},
 		{
 			"id": "3894fb63-7d77-476e-8fc8-ebfc3281b0f2",
 			"name": "getArtifacts",

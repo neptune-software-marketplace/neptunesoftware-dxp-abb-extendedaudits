@@ -13,24 +13,41 @@ sap.ui.getCore().attachInit(function(startParams) {
                     "status": ""
                 },
                 "types": [
-                    { "key": "Department", "text": txtLiteralGroup.getText() },
-                    { "key": "Role", "text": txtLiteralRole.getText() },
-                    { "key": "User", "text": txtLiteralUser.getText() },
+                    { "key": C_TYPE_GROUP, "text": txtLiteralGroup.getText() },
+                    { "key": C_TYPE_ROLE , "text": txtLiteralRole.getText() },
+                    { "key": C_TYPE_USER , "text": txtLiteralUser.getText() },
                 ],
                 "keys": [
-                    { "key": "New", "text": txtLiteralNew.getText() }
+                    { "key": "New", "text": txtLiteralNew.getText() } // "type": undefined => Any
                 ],
                 "actions": [
-                    { "key": "Activity", "text": txtLiteralActivity.getText() },
-                    { "key": "Save", "text": txtLiteralSave.getText() },
-                    // { "key": "Create", "text": txtLiteralCreate.getText() },
-                    { "key": "Delete", "text": txtLiteralDelete.getText() },
-                ]
+                    { "key": C_ACTION_ACTICITY, "text": txtLiteralActivity.getText() },
+                    { "key": C_ACTION_SAVE    , "text": txtLiteralSave.getText() },
+                    { "key": C_ACTION_CREATE  , "text": txtLiteralCreate.getText() },
+                    { "key": C_ACTION_DELETE  , "text": txtLiteralDelete.getText() },
+                ],
+                "treeTable": {
+                    "lastArtifact": ""
+                },
+                "toggle": {
+                    "typeAndKey": {
+                        "group": false,
+                        "role": false,
+                        "user": false
+                    }
+                },
+                "messageStrip": {
+                    "typeAndKey": {
+                        "visible": false
+                    }
+                }
             }
         );
         
         oHtmlJsonDisplay
             .setContent(`<div id='${oHtmlJsonDisplay.getId()}' style='width:100%;height:100%'></div>`);
+        oHtmlDetailHistoryDisplay
+            .setContent(`<div id='${oHtmlDetailHistoryDisplay.getId()}' style='width:100%;height:calc(100% - 2rem)'></div>`);
 
         goRelationsTexts = {
             group: txtLiteralGroup.getText(),
@@ -53,10 +70,13 @@ sap.ui.getCore().attachInit(function(startParams) {
         colHoTableSearchAuditResultscreatedAt.setWrapping(false);
         colHoTableSearchAuditResultschangedBy.setWrapping(false);
 
+        // ArtifactPropagation
+        ArtifactPropagation.subscribe(oPageDetailHistory.getId(), gfHandlerPageDetailHistory);
+
         // Gets the packages
         setBusy( true, oSplitterPageStart );
 
-        // TODO: packages
+        // Launchpad code to get the packages
         sap.n.Planet9.getPackageList().then(function(poPackages) { 
             let loPackages = [];
             for (loPackSingle of poPackages) {
@@ -67,20 +87,10 @@ sap.ui.getCore().attachInit(function(startParams) {
                     packages: loPackages
                 }
             });
-            console.log(loPackages);
+            // console.log(loPackages);
             toolStartUpdate.firePress();
             setBusy( false, oSplitterPageStart );
         });
-    //    apiGetPackages();
-        
-        //
-        // DEBUG
-        window.CUST = {
-            o: {
-                goMonacoEditor: goMonacoEditor,
-                When: When
-            }
-        }
 
     }, 100);
 });

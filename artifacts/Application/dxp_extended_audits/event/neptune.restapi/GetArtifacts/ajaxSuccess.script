@@ -6,6 +6,13 @@ try {
         goRelationsTexts );
     modelDataArtifactsInTree.setData(loTreeData);
     applyFilterToTree();
+    if (modelAppControl.getData()?.treeTable?.lastArtifact) {
+        let loData = ModelData.FindFirst(
+                        modelDataArtifactsAndRelations.getData().result.artifacts, 
+                        "objectKey",
+                        modelAppControl.getData()?.treeTable?.lastArtifact);
+        if (loData) { ArtifactPropagation.signal(loData); }
+    }
 //    console.log(loTreeData);
 }
 finally {

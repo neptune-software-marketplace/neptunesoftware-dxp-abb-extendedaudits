@@ -7,7 +7,72 @@
 .nepWidth100perc {
     width: 100%;
 }
+.nepHeight90perc {
+    width: 100%;
+}
+.nepWidth90perc {
+    width: 80%!important;
+}
+.nepHeight90perc {
+    height: 80%!important;
+}
+.npNoPadding {
+    padding: 0!important;
+}
+// Display message strips as part of a table row
+.npRowMessage {
+    width: 100%;
+    border-radius: 0;
+    border: 0;
+}
+// Toggle buttons
+.nepButtonToggleLeft > span {
+    margin-right: 1px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;}
+.nepButtonToggleLeft > span:before {
+    border-bottom-right-radius: 0px!important;
+    border-top-right-radius: 0px!important;
+}
+.nepButtonToggleMiddle > span {
+    margin-left: 0px;
+    margin-right: 0px;
+    border-radius: 0px;
+}
+.nepButtonToggleMiddle > span:before {
+    margin-left: 0px!important;
+    margin-right: 0px!important;
+    border-radius: 0px!important;
+}
+.nepButtonToggleRight > span {
+    margin-left: 1px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+.nepButtonToggleRight > span:before {
+    border-bottom-left-radius: 0px!important;
+    border-top-left-radius: 0px!important;
+}
+// .nepButtonToggleRight > span:focus {
+//     border-bottom-left-radius: 0px;
+//     border-top-left-radius: 0px;
+// }
 
+// Adjusts icon tabs and icon tab pages to full height
+.nepIconTab {
+    height: calc(100% - 0px);
+}
+.nepIconTab > .sapMITBContainerContent {
+    height: calc(100% - 77px);
+}
+.nepIconTab > .sapMITBContainerContent > [role=tabpanel] {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.nepIconTabPage {
+    height: 100%;
+}
 // Fixes cockpit adulteration of .sapUiLoSplitterBar
 .sapUiLoSplitter.sapUiLoSplitterV>.sapUiLoSplitterBar, 
 .sapUiLoSplitter.sapUiLoSplitterV>.sapUiLoSplitterOverlay .sapUiLoSplitterOverlayBar{

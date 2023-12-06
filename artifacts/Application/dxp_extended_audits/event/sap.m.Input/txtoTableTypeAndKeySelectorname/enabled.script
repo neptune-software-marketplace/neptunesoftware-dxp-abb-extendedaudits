@@ -1,0 +1,14 @@
+if (typeof type === "undefined" || type === null || type === "") { return; }  
+let lvGroupsEnabled = !!toggletypeAndKeygroup;
+let lvRolesEnabled = !!toggletypeAndKeyrole;
+let lvUsersEnabled = !!toggletypeAndKeyuser;
+
+switch(type) {
+    case C_TYPE_GROUP:
+        return lvGroupsEnabled || !(lvGroupsEnabled || lvRolesEnabled || lvUsersEnabled);
+    case C_TYPE_ROLE:
+        return lvRolesEnabled || !(lvGroupsEnabled || lvRolesEnabled || lvUsersEnabled);
+    case C_TYPE_USER:
+        return lvUsersEnabled || !(lvGroupsEnabled || lvRolesEnabled || lvUsersEnabled);
+}
+return false;

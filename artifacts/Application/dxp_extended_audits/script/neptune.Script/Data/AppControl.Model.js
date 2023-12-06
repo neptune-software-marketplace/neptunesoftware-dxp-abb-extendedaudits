@@ -17,5 +17,20 @@ model =
     ],
     "actions": [
         { "key": "", "text": "" }
-    ]
+    ],
+    "treeTable": {
+        "lastArtifact": ""
+    },
+    "toggle": {
+        "typeAndKey": {
+            "group": false,
+            "role": false,
+            "user": false
+        }
+    },
+    "messageStrip": {
+        "typeAndKey": {
+            "visible": false
+        }
+    }
 }

@@ -3,33 +3,44 @@ const loContext = this.getContextByIndex(this.getSelectedIndex());
 
 if (loContext) {
     //
-    // WISH: When clicking on an interactive node, the right side of the oSplitterPageStart opens up and the right side shows 
-    //       one or more applications related with the clicked object (e.g.: Diff between audit log entries)
-    // IMPORTANT: since no app is defined, then the right pane does NOT open.
-    return;
+    // When clicking on an interactive node, the right side of the oSplitterPageStart opens up and shows 
+    // one or more applications related with the clicked object (e.g.: History of the object changes)
     const loData = loContext.getObject();
     if (loData.objectType === "folder") { return; }
     
+    if (loData.objectKey === modelAppControl.getData().treeTable.lastArtifact) { return; }
+    modelAppControl.getData().treeTable.lastArtifact = loData.objectKey;
+    modelAppControl.refresh();
+
     //
-    // Check position of horizontal split. If it is up to 20px from the right edge, then move it to half~
-    // let lvSplitterX = oSplitterPageStart.getDomRef().querySelector('div[role=separator]').getClientRects()[0].right;
-    let lvContainerX = oSplitterPageStart.getDomRef().getClientRects()[0].width;
-    let lvSplitterX = oSplitterTreeTable.getSize();
-    if (lvSplitterX.match(/^\d(.\d*)?%$/)) {
-        lvSplitterX = Number.parseInt(lvSplitterX.slice(0,-1)) * lvContainerX / 100;
-    }
-    else if (lvSplitterX.match(/^\d*(.\d*)?px$/)) {
-        lvSplitterX = Number.parseInt(lvSplitterX.slice(0,-2));
-    }
-    else if (lvSplitterX.match(/^\d*(.\d*)?$/)) {
-        lvSplitterX = Number.parseInt(lvSplitterX);
-    }
-    else {
-        lvSplitterX = lvContainerX;
-    }
-    if (lvContainerX - lvSplitterX <= 20) {
-        oSplitterTreeTable.setResizable(true);
-        oSplitterTreeTable.setSize("50%");
-    }
-    // acquireObjectData(loData);
+    // Initiates the busy state
+    setBusy( true, oTabDetailPages ); // SELECT ITEM
+
+    setTimeout( () => {
+        //
+        // Check position of horizontal split. If it is up to 20px from the right edge, then move it to half~
+        // let lvSplitterX = oSplitterPageStart.getDomRef().querySelector('div[role=separator]').getClientRects()[0].right;
+        let lvContainerX = oSplitterPageStart.getDomRef().getClientRects()[0].width;
+        let lvSplitterX = oSplitterTreeTable.getSize();
+        if (lvSplitterX.match(/^\d(.\d*)?%$/)) {
+            lvSplitterX = Number.parseInt(lvSplitterX.slice(0,-1)) * lvContainerX / 100;
+        }
+        else if (lvSplitterX.match(/^\d*(.\d*)?px$/)) {
+            lvSplitterX = Number.parseInt(lvSplitterX.slice(0,-2));
+        }
+        else if (lvSplitterX.match(/^\d*(.\d*)?$/)) {
+            lvSplitterX = Number.parseInt(lvSplitterX);
+        }
+        else {
+            lvSplitterX = lvContainerX;
+        }
+        if (lvContainerX - lvSplitterX <= 20) {
+            oSplitterTreeTable.setResizable(true);
+            oSplitterTreeTable.setSize("50%");
+        }
+
+        ArtifactPropagation.signal(loData);
+
+        setBusy( false, oTabDetailPages ); // SELECT ITEM
+    }, 100);
 }

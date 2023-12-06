@@ -60,13 +60,18 @@ var C_ERROR_MESSAGE = 'Please give at least 1 valid parameter';
 /* DEBUG * / // <--- joining '*' and '/' will remove the comment in the DEBUG code below
 loWhere = [
     // { objectType: "User" },
-    // { beginDate: "2023-10-16", endDate: "2023-10-17" },
+    // { beginDate: "2023-12-01 00:00:00" },
+    // { beginDate: "2023-12-01 00:00:00", endDate: "2023-12-06" },
+    { beginDate: "2023-12-05 15:38:24", endDate: "2023-12-05 15:38:25" },
     // { objectType: "User", beginDate: "2023-10-16", endDate: "2023-10-17" },
     // { beginDate: "2023-10-17" },
     // { changedBy: 'paulo.reis.rosa@neptune-software.com', beginDate: "2023-10-19", endDate: "2023-10-19" },
     // { objectKey:"112b3c12-d9b6-467d-bf6b-ae3f8aaec65f", changedBy: 'rommel@neptune-software.com', action: "Activity", beginDate: "2023-10-18", endDate: "2023-10-19", content: 'Logout' },
-    { objectKey:"New" },
+    // { objectKey:"New" },
     // { action: "Save" },
+    // { objectType: "User", action: "Activity", beginDate: "2023-11-10", content: "Logon AND Success" },
+    // { objectType: "User", action: "Activity", objectKey: "C0F2C063-BD8A-EE11-8925-000D3ADC328D" },
+    // { objectType: "User", action: "Activity", beginDate: "2023-11-10", content: "Logon" },
 ]
 /* */
 console.log('Calculating query...');
@@ -171,6 +176,80 @@ var insertElement = function (poElement, poArray) {
     }
     return poArray;
 };
+var resolveOperator = function (poOperatorsAndText) {
+    var loOperatorAndText = JSON.parse(JSON.stringify(poOperatorsAndText));
+    while (loOperatorAndText.includes("AND")) {
+        var loAndIndex = loOperatorAndText.indexOf("AND");
+        var loAndObject = { and: { left: loOperatorAndText[loAndIndex - 1], right: loOperatorAndText[loAndIndex + 1] } };
+        loOperatorAndText.splice(loAndIndex - 1, 3, loAndObject);
+    }
+    while (loOperatorAndText.includes("OR")) {
+        var loOrIndex = loOperatorAndText.indexOf("OR");
+        var loOrObject = { or: { left: loOperatorAndText[loOrIndex - 1], right: loOperatorAndText[loOrIndex + 1] } };
+        loOperatorAndText.splice(loOrIndex - 1, 3, loOrObject);
+    }
+    return loOperatorAndText[0];
+};
+var resolveExpression = function (pvInput) {
+    if (pvInput.indexOf("AND") >= 0) { // } || pvInput.indexOf("OR") >= 0) {
+        // let loRegex = /(.*?)(AND|OR)|(.*)$/g;
+        var loRegex = /(.*?)(AND)|(.*)$/g;
+        var loOperatorAndText = [];
+        while (true) {
+            var loMatch = loRegex.exec(pvInput);
+            // if (["AND", "OR"].includes(loMatch[2])) {
+            if (["AND"].includes(loMatch[2])) {
+                loOperatorAndText.push(loMatch[1].trim());
+                loOperatorAndText.push(loMatch[2]);
+            }
+            else {
+                loOperatorAndText.push(loMatch[0].trim());
+                break;
+            }
+        }
+        return resolveOperator(loOperatorAndText);
+    }
+    return pvInput;
+};
+var buildSearchStringsFromOperation = function (poSearchExpression, pvReverseLogic) {
+    if (typeof poSearchExpression === "string") {
+        return ["%".concat(poSearchExpression, "%")];
+    }
+    var lvReverseLogic = !!pvReverseLogic;
+    var loAndOperation = !!poSearchExpression.and;
+    var loLeftOperation = buildSearchStringsFromOperation((loAndOperation) ? poSearchExpression.and.left : poSearchExpression.or.left);
+    var loRightOperation = buildSearchStringsFromOperation((loAndOperation) ? poSearchExpression.and.right : poSearchExpression.or.right);
+    if (loAndOperation != lvReverseLogic) {
+        // "Multiplies" the values
+        var loReturnData = [];
+        for (var _i = 0, loLeftOperation_1 = loLeftOperation; _i < loLeftOperation_1.length; _i++) {
+            var loLeftValue = loLeftOperation_1[_i];
+            for (var _a = 0, loRightOperation_1 = loRightOperation; _a < loRightOperation_1.length; _a++) {
+                var loRightValue = loRightOperation_1[_a];
+                loReturnData.push("".concat(loLeftValue).concat(loRightValue).replace('%%', '%'));
+            }
+        }
+        return loReturnData;
+    }
+    else {
+        // "Adds" the values
+        return loLeftOperation.concat(loRightOperation);
+    }
+};
+var buildWildcardCondition = function (pvField, poSearchExpression) {
+    if (poSearchExpression === "string") {
+        return "\"".concat(pvField, "\" LIKE '%").concat(poSearchExpression, "%'");
+    }
+    //
+    // Returns an array with the strings to search for
+    var loSearchStrings = buildSearchStringsFromOperation(poSearchExpression);
+    var loWildcardCondition = [];
+    for (var _i = 0, loSearchStrings_2 = loSearchStrings; _i < loSearchStrings_2.length; _i++) {
+        var lvSearchString = loSearchStrings_2[_i];
+        loWildcardCondition.push("\"".concat(pvField, "\" LIKE '").concat(lvSearchString, "'"));
+    }
+    return loWildcardCondition.join(' OR ');
+};
 if (Array.isArray(loWhere) && loWhere.length) {
     for (var _i = 0, loWhere_1 = loWhere; _i < loWhere_1.length; _i++) {
         var loWhereItem = loWhere_1[_i];
@@ -204,21 +283,51 @@ if (Array.isArray(loWhere) && loWhere.length) {
                 loFieldsUserActivity.push("( \"createdAt\" >= '".concat(loWhereItem.beginDate, "' )"));
             }
             else {
-                var lvBeginDate = (new Date(loWhereItem.beginDate)).toISOString().slice(0, 10);
-                var lvEndDate = (new Date((new Date(loWhereItem.endDate)).getTime() + C_ONE_DAY)).toISOString().slice(0, 10);
+                var lvBeginDate = (new Date(loWhereItem.beginDate)).toISOString().slice(0, 19).replace("T", " ");
+                var lvEndDate = new Date(loWhereItem.endDate).toISOString().slice(11, 19);
+                if ((lvEndDate === "00:00:00") && (loWhereItem.endDate.match(/^\d{4}-\d{2}-\d{2}[T ]?\s*$/g))) {
+                    // If the time was not specifically set, then the end date is set to the beggining of the next day
+                    lvEndDate = (new Date((new Date(loWhereItem.endDate)).getTime() + C_ONE_DAY)).toISOString().slice(0, 19).replace("T", " ");
+                }
+                else {
+                    // else use as provided
+                    lvEndDate = new Date(loWhereItem.endDate).toISOString().slice(0, 19).replace("T", " ");
+                }
+                // let lvEndDate = (new Date((new Date(loWhereItem.endDate)).getTime()+C_ONE_DAY)).toISOString().slice(0,19);
                 // BETWEEN dates excludes the end date events, because it uses the 00:00:00 of each day
                 loFieldsAudit.push("( ( \"createdAt\" between '".concat(lvBeginDate, "' AND '").concat(lvEndDate, "' ) OR ( \"updatedAt\" between '").concat(lvBeginDate, "' AND '").concat(lvEndDate, "' ) )"));
                 loFieldsUserActivity.push("( \"createdAt\" between '".concat(lvBeginDate, "' AND '").concat(lvEndDate, "' )"));
             }
         }
         if (loWhereItem === null || loWhereItem === void 0 ? void 0 : loWhereItem.content) {
-            loFieldsAudit.push("\"content\" LIKE '%".concat(loWhereItem.content, "%'"));
-            if (canTargetUserActivity([loWhereItem], false)) {
-                loFieldsUserActivity.push("( ".concat([
-                    "( \"action\" LIKE '%".concat(loWhereItem.content, "%' )"),
-                    "( \"result\" LIKE '%".concat(loWhereItem.content, "%' )"),
-                    "( \"data\" LIKE '%".concat(loWhereItem.content, "%' )")
-                ].join(' OR '), " )"));
+            var loSearchExpression = resolveExpression(loWhereItem.content);
+            if (typeof loSearchExpression === "string") {
+                console.log({ contentSingle: loWhereItem === null || loWhereItem === void 0 ? void 0 : loWhereItem.content });
+                loFieldsAudit.push("\"content\" LIKE '%".concat(loSearchExpression, "%'"));
+                if (canTargetUserActivity([loWhereItem], false)) {
+                    loFieldsUserActivity.push("( ".concat([
+                        "( \"action\" LIKE '%".concat(loSearchExpression, "%' )"),
+                        "( \"result\" LIKE '%".concat(loSearchExpression, "%' )"),
+                        "( \"data\" LIKE '%".concat(loSearchExpression, "%' )")
+                    ].join(' OR '), " )"));
+                }
+            }
+            else {
+                console.log({ contentComplex: loWhereItem === null || loWhereItem === void 0 ? void 0 : loWhereItem.content });
+                loFieldsAudit.push(buildWildcardCondition('content', loSearchExpression));
+                if (canTargetUserActivity([loWhereItem], false)) {
+                    var loSearchStrings = buildSearchStringsFromOperation(loSearchExpression, true);
+                    var loFieldsUserTemp = [];
+                    for (var _f = 0, loSearchStrings_1 = loSearchStrings; _f < loSearchStrings_1.length; _f++) {
+                        var lvSearchString = loSearchStrings_1[_f];
+                        loFieldsUserTemp.push("( ".concat([
+                            "( \"action\" LIKE '".concat(lvSearchString, "' )"),
+                            "( \"result\" LIKE '".concat(lvSearchString, "' )"),
+                            "( \"data\" LIKE '".concat(lvSearchString, "' )")
+                        ].join(' OR '), " )"));
+                    }
+                    loFieldsUserActivity.push("( ".concat(loFieldsUserTemp.join(' AND '), " )"));
+                }
             }
         }
         if (loFieldsAudit.length) {
@@ -238,9 +347,9 @@ else {
 }
 ;
 var lvAuditWhere = loQueryAudit.join(' OR ');
-// console.log('Generated query:', lvAuditWhere);
+console.log('Generated query:', lvAuditWhere);
 var lvSelect = "SELECT * FROM audit_log WHERE ".concat(lvAuditWhere, " ORDER BY \"updatedAt\" DESC");
-log.debug("Audit select:", lvSelect);
+// log.debug("Audit select:", lvSelect);
 var loResult = await p9.manager.query(lvSelect);
 // for (let loRow of loResult) {
 //     try {
@@ -267,19 +376,23 @@ if (loQueryUserActivity.length) {
     var lvUserActivitySelect = lvUserActivityWhere.match(/^\(\s*\)$/)
         ? "SELECT * FROM user_activity"
         : "SELECT * FROM user_activity WHERE ".concat(lvUserActivityWhere);
-    log.debug("User activity select:", lvUserActivitySelect);
+    // log.debug("User activity select:", lvUserActivitySelect);
     var loUserActivityResult = await p9.manager.query(lvUserActivitySelect);
     // console.log(loUserActivityResult);
     if (Array.isArray(loUserActivityResult) && loQueryUserActivity.length) {
         // Creates the virtual audit entries
-        for (var _f = 0, loUserActivityResult_1 = loUserActivityResult; _f < loUserActivityResult_1.length; _f++) {
-            var loUserActivity = loUserActivityResult_1[_f];
+        for (var _g = 0, loUserActivityResult_1 = loUserActivityResult; _g < loUserActivityResult_1.length; _g++) {
+            var loUserActivity = loUserActivityResult_1[_g];
+            // console.log("User Id:", loUserActivity?.userID);
+            // let loTempValue = (loIdUsernameRelation[loUserActivity?.userID]?.username) 
+            //                     ? loIdUsernameRelation[loUserActivity.userID].username
+            //                     : (await getUsernameOfId(loUserActivity?.userID)).username; 
             insertElement({
                 "id": "*".concat(loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.id),
                 "createdAt": loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.createdAt,
                 "updatedAt": loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.createdAt,
                 "changedBy": ((_d = loIdUsernameRelation[loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.userID]) === null || _d === void 0 ? void 0 : _d.username)
-                    ? loIdUsernameRelation[loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.userID.username]
+                    ? loIdUsernameRelation[loUserActivity.userID].username
                     : (await getUsernameOfId(loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.userID)).username,
                 "objectType": "User",
                 "objectKey": loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.userID,
@@ -288,12 +401,13 @@ if (loQueryUserActivity.length) {
                 "objectName": (_e = loIdUsernameRelation[loUserActivity === null || loUserActivity === void 0 ? void 0 : loUserActivity.userID]) === null || _e === void 0 ? void 0 : _e.name
             }, loResult);
         }
+        console.log(loResult);
     }
 }
 else {
     // log.debug("User activity NOT requested");
 }
-log.debug(loResult);
+// log.debug(loResult);
 result.statusCode = 200;
 result.data = {
     result: {

@@ -1,0 +1,11 @@
+// Multiple Filters using OR
+let lvValue = oEvent.getParameter("newValue");
+const loBinding = oTableTypeAndKeySelector.getBinding("items");
+const loMainFilter = new sap.ui.model.Filter({
+    filters: [
+        new sap.ui.model.Filter("typeDisplay", "Contains", lvValue),
+        new sap.ui.model.Filter("text", "Contains", lvValue)
+    ],
+    and: false
+})
+loBinding.filter([loMainFilter]);

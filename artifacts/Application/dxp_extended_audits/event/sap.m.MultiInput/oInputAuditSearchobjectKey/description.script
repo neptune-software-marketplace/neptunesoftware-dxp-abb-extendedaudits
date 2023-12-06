@@ -1,0 +1,14 @@
+if (typeof objectKeyMany === "undefined" || objectKeyMany === null || objectKeyMany === "") { return; }  
+let loKeyMany = Array.isArray(objectKeyMany) ? objectKeyMany: [];
+this.removeAllTokens();
+let loKeyData = modelAppControl.getData().keys;
+let loKeyObject;
+let lfMDFF = ModelData.FindFirst;
+
+for (let lvTokenId of loKeyMany) {
+    this.addToken( new sap.m.Token({ 
+        key: lvTokenId, 
+        text: (loKeyObject = lfMDFF(loKeyData, "key", lvTokenId)) ? loKeyObject.text : undefined 
+    }));
+}
+return ;

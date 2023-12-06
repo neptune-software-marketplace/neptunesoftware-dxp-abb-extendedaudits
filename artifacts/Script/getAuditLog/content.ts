@@ -25,13 +25,18 @@ const C_ERROR_MESSAGE = 'Please give at least 1 valid parameter';
 /* DEBUG * / // <--- joining '*' and '/' will remove the comment in the DEBUG code below 
 loWhere = [ 
     // { objectType: "User" },
-    // { beginDate: "2023-10-16", endDate: "2023-10-17" },
+    // { beginDate: "2023-12-01 00:00:00" },
+    // { beginDate: "2023-12-01 00:00:00", endDate: "2023-12-06" },
+    { beginDate: "2023-12-05 15:38:24", endDate: "2023-12-05 15:38:25" },
     // { objectType: "User", beginDate: "2023-10-16", endDate: "2023-10-17" },
     // { beginDate: "2023-10-17" },
     // { changedBy: 'paulo.reis.rosa@neptune-software.com', beginDate: "2023-10-19", endDate: "2023-10-19" },
     // { objectKey:"112b3c12-d9b6-467d-bf6b-ae3f8aaec65f", changedBy: 'rommel@neptune-software.com', action: "Activity", beginDate: "2023-10-18", endDate: "2023-10-19", content: 'Logout' },
-    { objectKey:"New" },
-    // { action: "Save" },
+    // { objectKey:"New" },
+    // { action: "Save" }, 
+    // { objectType: "User", action: "Activity", beginDate: "2023-11-10", content: "Logon AND Success" },
+    // { objectType: "User", action: "Activity", objectKey: "C0F2C063-BD8A-EE11-8925-000D3ADC328D" },
+    // { objectType: "User", action: "Activity", beginDate: "2023-11-10", content: "Logon" },
 ]
 /* */
 
@@ -55,6 +60,7 @@ const canTargetUserActivity = ( poWhereCond, pvStrictAction ) => {
 // Manages relations between ID and Username
 const loIdUsernameRelation = {};
 const loUsernameIdRelation = {};
+
 const getIdOfUsername = async function (pvUsername) {
     if (loUsernameIdRelation[pvUsername]) {
         return loUsernameIdRelation[pvUsername];
@@ -115,6 +121,78 @@ const insertElement = function (poElement, poArray) {
     }
     return poArray;
 }
+const resolveOperator = function ( poOperatorsAndText ) {
+	let loOperatorAndText = JSON.parse(JSON.stringify(poOperatorsAndText));
+	while( loOperatorAndText.includes("AND") ) {
+		let loAndIndex = loOperatorAndText.indexOf("AND");
+		let loAndObject = {and: { left: loOperatorAndText[loAndIndex - 1], right: loOperatorAndText[loAndIndex + 1] }};
+		loOperatorAndText.splice( loAndIndex - 1, 3, loAndObject );
+	}
+	while( loOperatorAndText.includes("OR") ) {
+		let loOrIndex = loOperatorAndText.indexOf("OR");
+		let loOrObject = {or: { left: loOperatorAndText[loOrIndex - 1], right: loOperatorAndText[loOrIndex + 1] }};
+		loOperatorAndText.splice( loOrIndex - 1, 3, loOrObject );
+	}
+	return loOperatorAndText[0];
+}
+const resolveExpression = function ( pvInput ) { // Only supports AND for now
+	if (pvInput.indexOf("AND") >= 0) { // } || pvInput.indexOf("OR") >= 0) {
+		// let loRegex = /(.*?)(AND|OR)|(.*)$/g;
+		let loRegex = /(.*?)(AND)|(.*)$/g;
+		let loOperatorAndText = [];
+		while( true ) {
+            let loMatch = loRegex.exec( pvInput );
+			// if (["AND", "OR"].includes(loMatch[2])) {
+			if (["AND"].includes(loMatch[2])) {
+				loOperatorAndText.push(loMatch[1].trim());
+				loOperatorAndText.push(loMatch[2]);
+			}
+			else {
+				loOperatorAndText.push(loMatch[0].trim());
+                break;
+			}
+		}
+		return resolveOperator( loOperatorAndText );
+	}
+	return pvInput;
+}
+const buildSearchStringsFromOperation = function( poSearchExpression, pvReverseLogic? ) {
+	if (typeof poSearchExpression === "string") { return [`%${poSearchExpression}%`]; }
+	
+    let lvReverseLogic = !!pvReverseLogic;
+	let loAndOperation = !!poSearchExpression.and;
+	let loLeftOperation = buildSearchStringsFromOperation( 
+		(loAndOperation) ? poSearchExpression.and.left : poSearchExpression.or.left );
+	let loRightOperation = buildSearchStringsFromOperation( 
+		(loAndOperation) ? poSearchExpression.and.right : poSearchExpression.or.right );
+	if (loAndOperation != lvReverseLogic) {
+		// "Multiplies" the values
+		let loReturnData = [];
+		for (let loLeftValue of loLeftOperation) {
+			for (let loRightValue of loRightOperation) {
+				loReturnData.push(`${loLeftValue}${loRightValue}`.replace('%%', '%'));
+			}
+		}
+		return loReturnData;
+	}
+	else {
+		// "Adds" the values
+		return loLeftOperation.concat( loRightOperation );
+	}
+}
+const buildWildcardCondition = function( pvField, poSearchExpression ) {
+	if ( poSearchExpression === "string" ) {
+		return `"${pvField}" LIKE '%${poSearchExpression}%'`;
+	}
+	//
+	// Returns an array with the strings to search for
+	let loSearchStrings = buildSearchStringsFromOperation( poSearchExpression );
+	let loWildcardCondition = [];
+	for (let lvSearchString of loSearchStrings) {
+		loWildcardCondition.push(`"${pvField}" LIKE '${lvSearchString}'`)
+	}
+    return loWildcardCondition.join(' OR ');
+}
 
 if (Array.isArray(loWhere) && loWhere.length) {
     for (let loWhereItem of loWhere) {
@@ -144,23 +222,53 @@ if (Array.isArray(loWhere) && loWhere.length) {
                 loFieldsUserActivity.push(`( "createdAt" >= '${loWhereItem.beginDate}' )`)
             }
             else {
-                let lvBeginDate = (new Date(loWhereItem.beginDate)).toISOString().slice(0,10);
-                let lvEndDate = (new Date((new Date(loWhereItem.endDate)).getTime()+C_ONE_DAY)).toISOString().slice(0,10);
+                let lvBeginDate = (new Date(loWhereItem.beginDate)).toISOString().slice(0,19).replace("T", " ");
+                let lvEndDate = new Date(loWhereItem.endDate).toISOString().slice(11,19);
+                if ((lvEndDate === "00:00:00") && (loWhereItem.endDate.match(/^\d{4}-\d{2}-\d{2}[T ]?\s*$/g))) {
+                    // If the time was not specifically set, then the end date is set to the beggining of the next day
+                    lvEndDate = (new Date((new Date(loWhereItem.endDate)).getTime()+C_ONE_DAY)).toISOString().slice(0,19).replace("T", " ");
+                } else {
+                    // else use as provided
+                    lvEndDate = new Date(loWhereItem.endDate).toISOString().slice(0,19).replace("T", " ");
+                }
+                // let lvEndDate = (new Date((new Date(loWhereItem.endDate)).getTime()+C_ONE_DAY)).toISOString().slice(0,19);
                 // BETWEEN dates excludes the end date events, because it uses the 00:00:00 of each day
                 loFieldsAudit.push(`( ( "createdAt" between '${lvBeginDate}' AND '${lvEndDate}' ) OR ( "updatedAt" between '${lvBeginDate}' AND '${lvEndDate}' ) )`)            
                 loFieldsUserActivity.push( `( "createdAt" between '${lvBeginDate}' AND '${lvEndDate}' )` )
             }
         }
         if (loWhereItem?.content) {
-            loFieldsAudit.push(`"content" LIKE '%${loWhereItem.content}%'`);
-            if (canTargetUserActivity([loWhereItem], false)) {
-                loFieldsUserActivity.push(`( ${
-                    [
-                        `( "action" LIKE '%${loWhereItem.content}%' )`,
-                        `( "result" LIKE '%${loWhereItem.content}%' )`,
-                        `( "data" LIKE '%${loWhereItem.content}%' )`
-                    ].join(' OR ')
-                } )`);
+            let loSearchExpression = resolveExpression( loWhereItem.content );
+            if (typeof loSearchExpression === "string" ) {
+                console.log({ contentSingle: loWhereItem?.content });
+                loFieldsAudit.push(`"content" LIKE '%${loSearchExpression}%'`);
+                if (canTargetUserActivity([loWhereItem], false)) {
+                    loFieldsUserActivity.push(`( ${
+                        [
+                            `( "action" LIKE '%${loSearchExpression}%' )`,
+                            `( "result" LIKE '%${loSearchExpression}%' )`,
+                            `( "data" LIKE '%${loSearchExpression}%' )`
+                        ].join(' OR ')
+                    } )`);
+                }
+            }
+            else {
+                console.log({ contentComplex: loWhereItem?.content });
+                loFieldsAudit.push( buildWildcardCondition( 'content', loSearchExpression ) );
+                if (canTargetUserActivity([loWhereItem], false)) {
+                    let loSearchStrings = buildSearchStringsFromOperation(loSearchExpression, true);
+                    let loFieldsUserTemp = [];
+                    for (let lvSearchString of loSearchStrings) {
+                        loFieldsUserTemp.push(`( ${
+                            [
+                                `( "action" LIKE '${lvSearchString}' )`,
+                                `( "result" LIKE '${lvSearchString}' )`,
+                                `( "data" LIKE '${lvSearchString}' )`
+                            ].join(' OR ')
+                        } )`);
+                    }
+                    loFieldsUserActivity.push(`( ${loFieldsUserTemp.join(' AND ')} )`);
+                }
             }
         }
         if ( loFieldsAudit.length ) {
@@ -180,9 +288,9 @@ else {
 };
 
 let lvAuditWhere = loQueryAudit.join(' OR ');
-// console.log('Generated query:', lvAuditWhere);
+console.log('Generated query:', lvAuditWhere);
 let lvSelect = `SELECT * FROM audit_log WHERE ${lvAuditWhere} ORDER BY "updatedAt" DESC`;
-log.debug("Audit select:", lvSelect);
+// log.debug("Audit select:", lvSelect);
 
 const loResult = await p9.manager.query( lvSelect );
 // for (let loRow of loResult) {
@@ -211,18 +319,22 @@ if ( loQueryUserActivity.length ) {
     let lvUserActivitySelect = lvUserActivityWhere.match(/^\(\s*\)$/)
                                 ? `SELECT * FROM user_activity`
                                 : `SELECT * FROM user_activity WHERE ${lvUserActivityWhere}`;
-    log.debug("User activity select:", lvUserActivitySelect);
+    // log.debug("User activity select:", lvUserActivitySelect);
     const loUserActivityResult = await p9.manager.query( lvUserActivitySelect );
     // console.log(loUserActivityResult);
     if (Array.isArray(loUserActivityResult) && loQueryUserActivity.length) {
         // Creates the virtual audit entries
         for (let loUserActivity of loUserActivityResult) {
+            // console.log("User Id:", loUserActivity?.userID);
+            // let loTempValue = (loIdUsernameRelation[loUserActivity?.userID]?.username) 
+            //                     ? loIdUsernameRelation[loUserActivity.userID].username
+            //                     : (await getUsernameOfId(loUserActivity?.userID)).username; 
             insertElement({
                 "id": `*${loUserActivity?.id}`,
                 "createdAt": loUserActivity?.createdAt,
                 "updatedAt": loUserActivity?.createdAt,
                 "changedBy": (loIdUsernameRelation[loUserActivity?.userID]?.username) 
-                                ? loIdUsernameRelation[loUserActivity?.userID.username]
+                                ? loIdUsernameRelation[loUserActivity.userID].username
                                 : (await getUsernameOfId(loUserActivity?.userID)).username,
                 "objectType": "User",
                 "objectKey": loUserActivity?.userID,
@@ -230,14 +342,15 @@ if ( loQueryUserActivity.length ) {
                 "content": JSON.stringify({"detail": loUserActivity}),
                 "objectName": loIdUsernameRelation[loUserActivity?.userID]?.name
             }, loResult);
-        }        
+        }
+        console.log(loResult);        
     }
 }
 else {
     // log.debug("User activity NOT requested");
 }
 
-log.debug(loResult);
+// log.debug(loResult);
 
 result.statusCode = 200;
 result.data = {

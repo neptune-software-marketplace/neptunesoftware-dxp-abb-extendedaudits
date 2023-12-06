@@ -1,0 +1,16 @@
+let loTypeMany = Array.isArray(objectTypeMany) ? objectTypeMany: [];
+this.removeAllTokens();
+for (let lvTokenId of loTypeMany) {
+    switch(lvTokenId) {
+        case C_TYPE_GROUP:
+            this.addToken( new sap.m.Token({ key: lvTokenId, text: txtLiteralGroup.getText() }));
+            break;
+        case C_TYPE_ROLE:
+            this.addToken( new sap.m.Token({ key: lvTokenId, text: txtLiteralRole.getText() }));
+            break;
+        case C_TYPE_USER:
+            this.addToken( new sap.m.Token({ key: lvTokenId, text: txtLiteralUser.getText() }));
+            break;
+    }
+}
+return ;

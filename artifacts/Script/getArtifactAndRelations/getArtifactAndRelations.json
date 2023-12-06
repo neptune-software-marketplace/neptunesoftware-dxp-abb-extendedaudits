@@ -1,0 +1,20 @@
+{
+	"id": "4d5a24d9-bd72-4977-8826-ff514f941449",
+	"createdAt": "2023-11-24T17:13:28.641Z",
+	"createdBy": "paulo.reis.rosa@neptune-software.com",
+	"globalScripts": [],
+	"externalModules": [],
+	"entitySets": [],
+	"apis": [],
+	"name": "getArtifactAndRelations",
+	"ver": "23.11.27.122",
+	"description": null,
+	"content": "file:///content.ts",
+	"useAsGlobalScript": false,
+	"transpiledContent": "file:///transpiledContent.ts",
+	"lastRunSuccessful": false,
+	"isTypescript": false,
+	"language": "typescript",
+	"jsscriptGroup": "d4641218-e3a3-4a1d-943c-e8592e346b19",
+	"package": "5551ecd0-9c10-4fc0-9646-bcd8792112cc"
+}

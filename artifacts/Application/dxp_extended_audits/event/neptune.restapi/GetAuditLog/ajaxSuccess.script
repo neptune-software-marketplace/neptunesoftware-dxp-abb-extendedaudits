@@ -1,6 +1,6 @@
 let loGroups = modelDataAuditLogResponse.getData()?.result?.audit
 if (Array.isArray(loGroups)) { 
-    for (let loGroupItem of ModelData.Find(loGroups, 'objectType', 'Department')) {
+    for (let loGroupItem of ModelData.Find(loGroups, 'objectType', C_TYPE_GROUP)) {
         loGroupItem.objectType = 'Group';
     }
     modelDataAuditLogResponse.refresh();

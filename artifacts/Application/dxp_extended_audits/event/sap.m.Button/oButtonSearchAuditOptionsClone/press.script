@@ -1,0 +1,9 @@
+const loContext = oEvent.getSource().getBindingContext("DataSelectionScreen");
+const lvPath = Number.parseInt(loContext.getPath().match(/(\d+)$/)[0]);
+if (isNaN(lvPath)) {
+    sap.m.MessageToast.show(txtNoIndexFound.getText());
+    return;
+}
+const loCopy = $.extend(true, {}, loContext.getObject());
+modelDataSelectionScreen.getData().selection.splice(lvPath+1,0,loCopy);
+modelDataSelectionScreen.refresh();

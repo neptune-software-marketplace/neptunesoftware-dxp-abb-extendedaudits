@@ -4,6 +4,10 @@ if (!goMonacoEditor) {
             // debugger;
             if (monaco) {
                 goMonacoEditor = monaco.editor.create(oHtmlJsonDisplay.getDomRef(), {
+                    scrollbar: {
+                        vertical: "visible",
+                        horizontal: "visible"
+                    },
                     automaticLayout: true,
                     codeLens: true,
                     language: 'json',
