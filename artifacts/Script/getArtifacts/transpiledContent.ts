@@ -1,12 +1,12 @@
 var goManager = p9.manager;
 var C_ALL = { where: {} };
-var goAllGroups = await goManager.query("SELECT 'Department' as \"objectType\", id as \"objectKey\",\n            name, description, package, \n            (null) as locked, (null) as active,\n            \"createdAt\", \"createdBy\", \"updatedAt\", \"changedBy\"\n        FROM department");
-var goAllRoles = await goManager.query("SELECT 'Role' as \"objectType\", id as \"objectKey\",\n            name, description, package, \n            (null) as locked, (null) as active,\n            \"createdAt\", \"createdBy\", \"updatedAt\", \"changedBy\"\n        FROM role");
+var goAllGroups = await goManager.query("SELECT 'Department' as \"objectType\", id as \"objectKey\",\n            name, description, package, \n            (null) as locked, (null) as active,\n            \"createdAt\", \"createdBy\", \"updatedAt\", \"changedBy\"\n        FROM planet9.department");
+var goAllRoles = await goManager.query("SELECT 'Role' as \"objectType\", id as \"objectKey\",\n            name, description, package, \n            (null) as locked, (null) as active,\n            \"createdAt\", \"createdBy\", \"updatedAt\", \"changedBy\"\n        FROM planet9.role");
 // const goAllUsers = await goManager.find('users', C_ALL);
-var goAllUsers = await goManager.query("SELECT 'User' as \"objectType\", id as \"objectKey\",\n            username as name, name as description, (null) as package,\n            locked, begins, ends, (null) as active,\n            \"createdAt\", \"createdBy\", \"updatedAt\", \"changedBy\"\n        FROM users");
-var goAllUsersXRoles = await goManager.query("SELECT role_users as \"Role\", users_roles as \"User\" FROM role_users__users_roles");
-var goAllUsersXGroups = await goManager.query("SELECT department_users as \"Department\", users_departments as \"User\"\n       FROM department_users__users_departments");
-var goAllRolesXGroups = await goManager.query("SELECT department_roles as \"Department\", role_departments as \"Role\" FROM department_roles__role_departments");
+var goAllUsers = await goManager.query("SELECT 'User' as \"objectType\", id as \"objectKey\",\n            username as name, name as description, (null) as package,\n            locked, begins, ends, (null) as active,\n            \"createdAt\", \"createdBy\", \"updatedAt\", \"changedBy\"\n        FROM planet9.users");
+var goAllUsersXRoles = await goManager.query("SELECT role_users as \"Role\", users_roles as \"User\" FROM planet9.role_users__users_roles");
+var goAllUsersXGroups = await goManager.query("SELECT department_users as \"Department\", users_departments as \"User\"\n       FROM planet9.department_users__users_departments");
+var goAllRolesXGroups = await goManager.query("SELECT department_roles as \"Department\", role_departments as \"Role\" FROM planet9.department_roles__role_departments");
 /*
 console.log('Total groups:', (goAllGroups) ? goAllGroups.length : 0);
 console.log('Total roles:', (goAllRoles) ? goAllRoles.length : 0);

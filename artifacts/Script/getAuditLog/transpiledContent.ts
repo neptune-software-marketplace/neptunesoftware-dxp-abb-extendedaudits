@@ -57,7 +57,7 @@ var loQueryAudit = [];
 var loQueryUserActivity = [];
 var loWhere = (_a = req.body) === null || _a === void 0 ? void 0 : _a.where;
 var C_ERROR_MESSAGE = 'Please give at least 1 valid parameter';
-/* DEBUG * / // <--- joining '*' and '/' will remove the comment in the DEBUG code below
+/* DEBUG */ // <--- joining '*' and '/' will remove the comment in the DEBUG code below 
 loWhere = [
     // { objectType: "User" },
     // { beginDate: "2023-12-01 00:00:00" },
@@ -68,11 +68,11 @@ loWhere = [
     // { changedBy: 'paulo.reis.rosa@neptune-software.com', beginDate: "2023-10-19", endDate: "2023-10-19" },
     // { objectKey:"112b3c12-d9b6-467d-bf6b-ae3f8aaec65f", changedBy: 'rommel@neptune-software.com', action: "Activity", beginDate: "2023-10-18", endDate: "2023-10-19", content: 'Logout' },
     // { objectKey:"New" },
-    // { action: "Save" },
+    // { action: "Save" }, 
     // { objectType: "User", action: "Activity", beginDate: "2023-11-10", content: "Logon AND Success" },
     // { objectType: "User", action: "Activity", objectKey: "C0F2C063-BD8A-EE11-8925-000D3ADC328D" },
     // { objectType: "User", action: "Activity", beginDate: "2023-11-10", content: "Logon" },
-]
+];
 /* */
 // console.log('Calculating query...')
 var C_ONE_DAY = 24 * 60 * 60 * 1000; // amount of milliseconds in a day
@@ -103,7 +103,7 @@ var getIdOfUsername = function (pvUsername) {
                     if (loUsernameIdRelation[pvUsername]) {
                         return [2 /*return*/, loUsernameIdRelation[pvUsername]];
                     }
-                    return [4 /*yield*/, p9.manager.findOne('users', {
+                    return [4 /*yield*/, p9.manager.findOne('planet9.users', {
                             select: {
                                 id: true,
                                 name: true
@@ -130,7 +130,7 @@ var getUsernameOfId = function (pvId) {
                     if (loIdUsernameRelation[pvId]) {
                         return [2 /*return*/, loIdUsernameRelation[pvId]];
                     }
-                    return [4 /*yield*/, p9.manager.findOne('users', {
+                    return [4 /*yield*/, p9.manager.findOne('planet9.users', {
                             select: {
                                 username: true,
                                 name: true
@@ -348,7 +348,7 @@ else {
 ;
 var lvAuditWhere = loQueryAudit.join(' OR ');
 // console.log('Generated query:', lvAuditWhere);
-var lvSelect = "SELECT * FROM audit_log WHERE ".concat(lvAuditWhere, " ORDER BY \"updatedAt\" DESC");
+var lvSelect = "SELECT * FROM planet9.audit_log WHERE ".concat(lvAuditWhere, " ORDER BY \"updatedAt\" DESC");
 // log.debug("Audit select:", lvSelect);
 var loResult = await p9.manager.query(lvSelect);
 // for (let loRow of loResult) {
@@ -374,8 +374,8 @@ if (loQueryUserActivity.length) {
     }
     // Collects the activity
     var lvUserActivitySelect = lvUserActivityWhere.match(/^\(\s*\)$/)
-        ? "SELECT * FROM user_activity"
-        : "SELECT * FROM user_activity WHERE ".concat(lvUserActivityWhere);
+        ? "SELECT * FROM planet9.user_activity"
+        : "SELECT * FROM planet9.user_activity WHERE ".concat(lvUserActivityWhere);
     // log.debug("User activity select:", lvUserActivitySelect);
     var loUserActivityResult = await p9.manager.query(lvUserActivitySelect);
     // console.log(loUserActivityResult);

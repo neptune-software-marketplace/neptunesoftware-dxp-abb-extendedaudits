@@ -22,7 +22,7 @@ let loQueryUserActivity = [];
 let loWhere = req.body?.where;
 const C_ERROR_MESSAGE = 'Please give at least 1 valid parameter';
 
-/* DEBUG * / // <--- joining '*' and '/' will remove the comment in the DEBUG code below 
+/* DEBUG */ // <--- joining '*' and '/' will remove the comment in the DEBUG code below 
 loWhere = [ 
     // { objectType: "User" },
     // { beginDate: "2023-12-01 00:00:00" },
@@ -65,7 +65,7 @@ const getIdOfUsername = async function (pvUsername) {
     if (loUsernameIdRelation[pvUsername]) {
         return loUsernameIdRelation[pvUsername];
     }
-    let loResult = await p9.manager.findOne('users', {
+    let loResult = await p9.manager.findOne('planet9.users', {
         select: {
             id: true,
             name: true
@@ -82,7 +82,7 @@ const getUsernameOfId = async function (pvId) {
     if (loIdUsernameRelation[pvId]) {
         return loIdUsernameRelation[pvId];
     }
-    let loResult = await p9.manager.findOne('users', {
+    let loResult = await p9.manager.findOne('planet9.users', {
         select: {
             username: true,
             name: true
@@ -289,7 +289,7 @@ else {
 
 let lvAuditWhere = loQueryAudit.join(' OR ');
 // console.log('Generated query:', lvAuditWhere);
-let lvSelect = `SELECT * FROM audit_log WHERE ${lvAuditWhere} ORDER BY "updatedAt" DESC`;
+let lvSelect = `SELECT * FROM planet9.audit_log WHERE ${lvAuditWhere} ORDER BY "updatedAt" DESC`;
 // log.debug("Audit select:", lvSelect);
 
 const loResult = await p9.manager.query( lvSelect );
@@ -317,8 +317,8 @@ if ( loQueryUserActivity.length ) {
     }
     // Collects the activity
     let lvUserActivitySelect = lvUserActivityWhere.match(/^\(\s*\)$/)
-                                ? `SELECT * FROM user_activity`
-                                : `SELECT * FROM user_activity WHERE ${lvUserActivityWhere}`;
+                                ? `SELECT * FROM planet9.user_activity`
+                                : `SELECT * FROM planet9.user_activity WHERE ${lvUserActivityWhere}`;
     // log.debug("User activity select:", lvUserActivitySelect);
     const loUserActivityResult = await p9.manager.query( lvUserActivitySelect );
     // console.log(loUserActivityResult);

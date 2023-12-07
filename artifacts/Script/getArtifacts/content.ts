@@ -6,27 +6,27 @@ const goAllGroups = await goManager.query(
             name, description, package, 
             (null) as locked, (null) as active,
             "createdAt", "createdBy", "updatedAt", "changedBy"
-        FROM department`);
+        FROM planet9.department`);
 const goAllRoles = await goManager.query(
     `SELECT 'Role' as "objectType", id as "objectKey",
             name, description, package, 
             (null) as locked, (null) as active,
             "createdAt", "createdBy", "updatedAt", "changedBy"
-        FROM role`);
+        FROM planet9.role`);
 // const goAllUsers = await goManager.find('users', C_ALL);
 const goAllUsers = await goManager.query(
     `SELECT 'User' as "objectType", id as "objectKey",
             username as name, name as description, (null) as package,
             locked, begins, ends, (null) as active,
             "createdAt", "createdBy", "updatedAt", "changedBy"
-        FROM users`);
+        FROM planet9.users`);
 const goAllUsersXRoles = await goManager.query(
-    `SELECT role_users as "Role", users_roles as "User" FROM role_users__users_roles`);
+    `SELECT role_users as "Role", users_roles as "User" FROM planet9.role_users__users_roles`);
 const goAllUsersXGroups = await goManager.query(
     `SELECT department_users as "Department", users_departments as "User"
-       FROM department_users__users_departments`);
+       FROM planet9.department_users__users_departments`);
 const goAllRolesXGroups = await goManager.query(
-    `SELECT department_roles as "Department", role_departments as "Role" FROM department_roles__role_departments`);
+    `SELECT department_roles as "Department", role_departments as "Role" FROM planet9.department_roles__role_departments`);
 
 /*
 console.log('Total groups:', (goAllGroups) ? goAllGroups.length : 0);
