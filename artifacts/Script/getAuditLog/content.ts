@@ -22,7 +22,7 @@ let loQueryUserActivity = [];
 let loWhere = req.body?.where;
 const C_ERROR_MESSAGE = 'Please give at least 1 valid parameter';
 
-/* DEBUG */ // <--- joining '*' and '/' will remove the comment in the DEBUG code below 
+/* DEBUG * / // <--- joining '*' and '/' will remove the comment in the DEBUG code below 
 loWhere = [ 
     // { objectType: "User" },
     // { beginDate: "2023-12-01 00:00:00" },

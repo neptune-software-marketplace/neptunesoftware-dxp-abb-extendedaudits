@@ -7,7 +7,7 @@
 	"entitySets": [],
 	"apis": [],
 	"name": "getAuditLog",
-	"ver": "23.12.7.1711",
+	"ver": "23.12.7.1746",
 	"description": null,
 	"content": "file:///content.ts",
 	"useAsGlobalScript": false,
