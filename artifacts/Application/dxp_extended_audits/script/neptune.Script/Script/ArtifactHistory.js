@@ -26,7 +26,7 @@ function compareObjects(poOldObject, poNewObject) {
           }
           lvCounter++;
         } // for::loNewChild
-      } else if (!poOldObject.hasOwnProperty(lvKey)) {
+      } else if (!(poOldObject && poOldObject.hasOwnProperty(lvKey))) {
         added[lvNewPath] = poNewObject[lvKey];
       } else if (typeof poOldObject[lvKey] !== typeof poNewObject[lvKey]) {
         modified[lvNewPath] = {
@@ -62,7 +62,7 @@ function compareObjects(poOldObject, poNewObject) {
           }
           lvCounter++;
         } // for::loOldChild
-      } else if (!poNewObject.hasOwnProperty(lvKey)) {
+      } else if (!(poNewObject && poNewObject.hasOwnProperty(lvKey))) {
         deleted[lvNewPath] = poOldObject[lvKey];
       }
     }
