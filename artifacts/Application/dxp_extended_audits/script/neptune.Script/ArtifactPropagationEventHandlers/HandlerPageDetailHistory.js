@@ -427,7 +427,13 @@ function pageDetailHistoryDiffOutputRow(poConfig, poDiffData, poOptions) {
             let loData = (!poData.length) ?[] : (function() {
                 let loUnpackedData = $.extend(true, [], poData);
                 for (let loRow of loUnpackedData) {
-                    loRow.content = JSON.parse(loRow.content);
+                    try {
+                        loRow.content = JSON.parse(loRow.content);
+                    } catch( e ) {
+                        console.error(`Inputted stringified JSON: ${(loRow.content) ? loRow.content : '<empty string>'}`);
+                        console.error(e);
+                        loRow.content = {};
+                    }
                 }
                 return loUnpackedData;
             })();
@@ -446,6 +452,7 @@ function pageDetailHistoryDiffOutputRow(poConfig, poDiffData, poOptions) {
                                         ? loEntry.content.detail
                                         : loEntry.content;
                 let loEntryRelations = loEntryContent[loTargetRelation];
+                if (!(Array.isArray(loEntryRelations) && loEntryRelations.length)) { continue; }
                 let loParentExistsInRelation = ModelData.FindFirst(loEntryRelations, "id", loOptions.parentKey);
                 let loAction = {
                     actionAdd   : !!loParentExistsInRelation,

@@ -5,5 +5,6 @@
 	"name": "dxp_extended_audits",
 	"description": "Role for the Extended Audits app",
 	"ver": "23.10.30.1559",
-	"package": "5551ecd0-9c10-4fc0-9646-bcd8792112cc"
+	"package": "5551ecd0-9c10-4fc0-9646-bcd8792112cc",
+	"acl": []
 }

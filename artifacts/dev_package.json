@@ -7,7 +7,7 @@
 	},
 	"name": "neptunesoftware-dxp-abb-extendedaudits",
 	"description": "Extended Audits",
-	"ver": "23.12.11.836",
+	"ver": "24.1.2.1729",
 	"enableCICD": true,
 	"apps": [
 		{
