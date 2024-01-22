@@ -8,7 +8,7 @@ const APPVIEW = (this instanceof sap.ui.core.mvc.View)
                         createId: (pvId) => String(pvId)
                     }
 
-const C_ACTION_ACTICITY = "Activity";
+const C_ACTION_ACTIVITY = "Activity";
 const C_ACTION_CREATE   = "Create";
 const C_ACTION_DELETE   = "Delete";
 const C_ACTION_SAVE     = "Save";

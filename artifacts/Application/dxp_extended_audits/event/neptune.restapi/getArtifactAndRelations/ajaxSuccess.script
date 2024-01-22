@@ -1,8 +1,0 @@
-//
-goArtifactHistoryObjectResponse = (xhr.responseJSON?.result?.detail) ?xhr.responseJSON.result.detail :{};
-pageDetailHistoryRefresh();
-// console.log('@getArtifactsAndRelation-success:', xhr.status);
-// console.log("Artifact audit history response:", goArtifactHistoryAuditResponse);
-// console.log("Artifact object response:", goArtifactHistoryObjectResponse);
-setBusy( false, oPageDetailHistory );
-window.CUST = {goArtifactHistoryRequest, goArtifactHistoryAuditResponse, goArtifactHistoryObjectResponse};

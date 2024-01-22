@@ -1,0 +1,14 @@
+let loData = (Array.isArray(xhr.responseJSON?.result?.audit)
+                ? xhr.responseJSON.result.audit
+                : []).map(function(poEntry) {
+                    try {
+                        poEntry.content = JSON.parse(poEntry.content);
+                    } catch (e) {
+                        poEntry.content = {};
+                    }
+                    return poEntry;
+                })
+PageDetailHistory.handleGetAuditLogAndCrossReferences( {
+    success: true, 
+    data: loData
+} );

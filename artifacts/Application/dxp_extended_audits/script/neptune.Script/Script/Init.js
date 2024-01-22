@@ -21,7 +21,7 @@ sap.ui.getCore().attachInit(function(startParams) {
                     { "key": "New", "text": txtLiteralNew.getText() } // "type": undefined => Any
                 ],
                 "actions": [
-                    { "key": C_ACTION_ACTICITY, "text": txtLiteralActivity.getText() },
+                    { "key": C_ACTION_ACTIVITY, "text": txtLiteralActivity.getText() },
                     { "key": C_ACTION_SAVE    , "text": txtLiteralSave.getText() },
                     { "key": C_ACTION_CREATE  , "text": txtLiteralCreate.getText() },
                     { "key": C_ACTION_DELETE  , "text": txtLiteralDelete.getText() },
@@ -71,7 +71,7 @@ sap.ui.getCore().attachInit(function(startParams) {
         colHoTableSearchAuditResultschangedBy.setWrapping(false);
 
         // ArtifactPropagation
-        ArtifactPropagation.subscribe(oPageDetailHistory.getId(), gfHandlerPageDetailHistory);
+        ArtifactPropagation.subscribe(oPageDetailHistory.getId(), PageDetailHistory.propagationHandler);
 
         // Gets the packages
         setBusy( true, oSplitterPageStart );

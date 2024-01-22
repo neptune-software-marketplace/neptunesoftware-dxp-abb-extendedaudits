@@ -9,6 +9,7 @@
 	"name": "getAuditLog",
 	"ver": "23.12.7.1746",
 	"description": null,
+	"folder": null,
 	"content": "file:///content.ts",
 	"useAsGlobalScript": false,
 	"transpiledContent": "file:///transpiledContent.ts",

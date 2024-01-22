@@ -1,0 +1,4 @@
+PageDetailHistory.handleGetArtifactsAndRelations( {
+    success: true, 
+    data: (xhr.responseJSON?.result?.detail) ?xhr.responseJSON.result.detail :{}
+} );

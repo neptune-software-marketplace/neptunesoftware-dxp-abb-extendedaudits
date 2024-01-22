@@ -9,6 +9,7 @@
 	"name": "getArtifacts",
 	"ver": "23.12.7.178",
 	"description": "get all users, roles, groups and relations",
+	"folder": null,
 	"content": "file:///content.ts",
 	"useAsGlobalScript": false,
 	"transpiledContent": "file:///transpiledContent.ts",

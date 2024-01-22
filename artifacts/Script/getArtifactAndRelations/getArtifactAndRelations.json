@@ -9,6 +9,7 @@
 	"name": "getArtifactAndRelations",
 	"ver": "23.12.7.1729",
 	"description": null,
+	"folder": null,
 	"content": "file:///content.ts",
 	"useAsGlobalScript": false,
 	"transpiledContent": "file:///transpiledContent.ts",

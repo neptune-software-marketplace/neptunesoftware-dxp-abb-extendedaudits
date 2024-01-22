@@ -2199,6 +2199,226 @@
 					"attributes": [],
 					"data": [
 						{
+							"fieldNo": "df81e14e-0f66-4a8e-e7c8-81faee5ca662",
+							"fieldName": "txtHistoryUserActivity",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "user activity: &1 (&2) with data '&3'",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "d3f3efe0-d061-43fc-fe5a-fa469a2483d5",
+							"fieldName": "txtHistoryFieldModifiedOutput",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "&1: from &2; to &3",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "0c4b46e7-b4a7-4013-8f69-03a136dee473",
+							"fieldName": "txtHistoryFieldAddedOutput",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "&1: added &2",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "805d685d-69f0-4037-f688-e38c7d8fa9d0",
+							"fieldName": "txtHistoryRelationAddedOutput",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "&1 added:",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "513216ec-22f6-474e-c624-59bff0fbf66f",
+							"fieldName": "txtHistoryRelationRemovedOutput",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "&1 removed:",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "6c15fd37-383c-4234-bcef-5268b11666ac",
+							"fieldName": "txtHistoryRelationDataOutput",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "name: &1; id: &2",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "8b7a344c-44d6-49a3-9ea5-313ad8647b34",
+							"fieldName": "txtHistoryRelationCrossrefAddedOutput",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "\"[&1] added by &2\"",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "ba7710e8-02ea-45b7-d4f2-2af718f05b37",
+							"fieldName": "txtHistoryRelationCrossrefRemovedOutput",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "\"[&1] removed by &2\"",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "4fbce35a-dc73-4229-c17e-6927f5b5fe6b",
+							"fieldName": "txtCantHandleArtifactType",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "Can't handle this artifact type: &1.",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "a2dbff38-cec4-4825-8a2d-2531d6a11f43",
+							"fieldName": "txtErrorMessageFormat",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "Code: &1\\nMessage: &2",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "302a7aff-75ae-43ae-a71e-5e4b806e010c",
+							"fieldName": "txtErrorContactingTheServer",
+							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
+							"fieldType": "sap.m.Text",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "Error contacting the server.",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
 							"fieldNo": "2329e95d-1c80-40e1-9b1d-84fe53124fb2",
 							"fieldName": "txtChangedbyUnknwonUser",
 							"fieldParent": "5a75f613-aac6-4f88-b80a-0b4632299644",
@@ -6587,68 +6807,8 @@
 							"data": []
 						},
 						{
-							"fieldNo": "2af187d9-1f51-4c81-97fa-20d07744c1af",
-							"fieldName": "GetAuditLogHistory",
-							"fieldParent": "7a19180a-2698-453f-b2d1-9b54ebb17cb2",
-							"fieldType": "neptune.restapi",
-							"script": "",
-							"customComponent": false,
-							"restSource": "f60fdeb0-8cc5-4332-815a-a9793824d7d8",
-							"restOperation": "25659ebc-84bb-4592-9063-61e66bcaef9d",
-							"request": [],
-							"response": [],
-							"attributes": [
-								{
-									"attribute": "ajaxSuccess",
-									"grouping": "Events",
-									"value": "Anonymous Function",
-									"script": "file://event/neptune.restapi/GetAuditLogHistory/ajaxSuccess.script",
-									"translation": []
-								},
-								{
-									"attribute": "ajaxError",
-									"grouping": "Events",
-									"value": "Anonymous Function",
-									"script": "file://event/neptune.restapi/GetAuditLogHistory/ajaxError.js",
-									"language": "javascript",
-									"translation": []
-								}
-							],
-							"data": []
-						},
-						{
-							"fieldNo": "5ee4ba88-4746-49c5-d30c-80db164d593e",
-							"fieldName": "GetAuditLogCrossRef",
-							"fieldParent": "7a19180a-2698-453f-b2d1-9b54ebb17cb2",
-							"fieldType": "neptune.restapi",
-							"script": "",
-							"customComponent": false,
-							"restSource": "f60fdeb0-8cc5-4332-815a-a9793824d7d8",
-							"restOperation": "25659ebc-84bb-4592-9063-61e66bcaef9d",
-							"request": [],
-							"response": [],
-							"attributes": [
-								{
-									"attribute": "ajaxSuccess",
-									"grouping": "Events",
-									"value": "Anonymous Function",
-									"script": "file://event/neptune.restapi/GetAuditLogCrossRef/ajaxSuccess.script",
-									"translation": []
-								},
-								{
-									"attribute": "ajaxError",
-									"grouping": "Events",
-									"value": "Anonymous Function",
-									"script": "file://event/neptune.restapi/GetAuditLogCrossRef/ajaxError.js",
-									"language": "javascript",
-									"translation": []
-								}
-							],
-							"data": []
-						},
-						{
-							"fieldNo": "51ef7884-3149-47b5-b2a3-55f3e03f416f",
-							"fieldName": "getArtifactAndRelations",
+							"fieldNo": "1535f795-a48a-4373-962c-f0571e2b5605",
+							"fieldName": "GetArtifactAndRelations_New",
 							"fieldParent": "7a19180a-2698-453f-b2d1-9b54ebb17cb2",
 							"fieldType": "neptune.restapi",
 							"script": "",
@@ -6662,14 +6822,74 @@
 									"attribute": "ajaxSuccess",
 									"grouping": "Events",
 									"value": "Anonymous Function",
-									"script": "file://event/neptune.restapi/getArtifactAndRelations/ajaxSuccess.script",
+									"script": "file://event/neptune.restapi/GetArtifactAndRelations_New/ajaxSuccess.script",
 									"translation": []
 								},
 								{
 									"attribute": "ajaxError",
 									"grouping": "Events",
 									"value": "Anonymous Function",
-									"script": "file://event/neptune.restapi/getArtifactAndRelations/ajaxError.js",
+									"script": "file://event/neptune.restapi/GetArtifactAndRelations_New/ajaxError.js",
+									"language": "javascript",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "5e5522fe-8a37-44b1-f718-11794a779cc9",
+							"fieldName": "GetAuditLogAndCrossReferences",
+							"fieldParent": "7a19180a-2698-453f-b2d1-9b54ebb17cb2",
+							"fieldType": "neptune.restapi",
+							"script": "",
+							"customComponent": false,
+							"restSource": "f60fdeb0-8cc5-4332-815a-a9793824d7d8",
+							"restOperation": "25659ebc-84bb-4592-9063-61e66bcaef9d",
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "ajaxSuccess",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/neptune.restapi/GetAuditLogAndCrossReferences/ajaxSuccess.script",
+									"translation": []
+								},
+								{
+									"attribute": "ajaxError",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/neptune.restapi/GetAuditLogAndCrossReferences/ajaxError.js",
+									"language": "javascript",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "16dad728-94a8-4160-bf24-5b4b8cc939d4",
+							"fieldName": "GetFinalCrossReferences",
+							"fieldParent": "7a19180a-2698-453f-b2d1-9b54ebb17cb2",
+							"fieldType": "neptune.restapi",
+							"script": "",
+							"customComponent": false,
+							"restSource": "f60fdeb0-8cc5-4332-815a-a9793824d7d8",
+							"restOperation": "25659ebc-84bb-4592-9063-61e66bcaef9d",
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "ajaxSuccess",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/neptune.restapi/GetFinalCrossReferences/ajaxSuccess.script",
+									"translation": []
+								},
+								{
+									"attribute": "ajaxError",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/neptune.restapi/GetFinalCrossReferences/ajaxError.js",
 									"language": "javascript",
 									"translation": []
 								}
@@ -6737,11 +6957,11 @@
 							"attributes": [],
 							"data": [
 								{
-									"fieldNo": "e03e71dc-dad5-4788-ac64-045f200cba3a",
-									"fieldName": "HandlerPageDetailHistory",
+									"fieldNo": "5baa4bcb-d2da-4627-ddc9-cc4cb21a515f",
+									"fieldName": "PageDetailHistory",
 									"fieldParent": "55c696bc-7044-4d1f-cce7-bbf1a444e3a4",
 									"fieldType": "neptune.Script",
-									"script": "file://script/neptune.Script/ArtifactPropagationEventHandlers/HandlerPageDetailHistory.js",
+									"script": "file://script/neptune.Script/ArtifactPropagationEventHandlers/PageDetailHistory.js",
 									"customComponent": false,
 									"request": [],
 									"response": [],
@@ -6752,10 +6972,10 @@
 						},
 						{
 							"fieldNo": "6e45a072-d7f4-44f9-8d53-b2e2aa37c43b",
-							"fieldName": "ArtifactHistory",
+							"fieldName": "ArtifactHistoryCompareObjects",
 							"fieldParent": "1dd78fe2-b9a1-42f0-b87a-aa20e089d5f4",
 							"fieldType": "neptune.Script",
-							"script": "file://script/neptune.Script/Script/ArtifactHistory.js",
+							"script": "file://script/neptune.Script/Script/ArtifactHistoryCompareObjects.js",
 							"customComponent": false,
 							"request": [],
 							"response": [],
@@ -6857,7 +7077,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "24.1.2.1835",
+	"ver": "24.1.22.621",
 	"application": "dxp_extended_audits",
 	"title": "",
 	"description": "",
