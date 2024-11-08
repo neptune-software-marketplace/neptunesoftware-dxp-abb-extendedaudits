@@ -7077,7 +7077,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "24.1.22.621",
+	"ver": "24.11.07.1650",
 	"application": "dxp_extended_audits",
 	"title": "",
 	"description": "",
@@ -7102,7 +7102,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
-	"compiledCss": "file://script/undefined/undefined.script",
+	"compiledCss": "file:///compiledCss.css",
 	"header": "",
 	"manifest": "",
 	"globalScript": null,
@@ -7118,12 +7118,12 @@
 	"printWidth": null,
 	"generateVersionOnActivation": false,
 	"activationHistoryCount": 0,
+	"package": "5551ecd0-9c10-4fc0-9646-bcd8792112cc",
 	"apis": [
 		{
 			"id": "f60fdeb0-8cc5-4332-815a-a9793824d7d8",
 			"name": "dxp_extended_audits",
 			"ver": "23.12.6.200"
 		}
-	],
-	"package": "5551ecd0-9c10-4fc0-9646-bcd8792112cc"
+	]
 }

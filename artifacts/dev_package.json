@@ -9,15 +9,16 @@
 	"description": "Extended Audits",
 	"ver": "24.1.2.1735",
 	"enableCICD": true,
+	"internalReadOnly": false,
+	"oeVersion": null,
+	"excludeTemplateFiles": false,
+	"roles": [],
 	"apps": [
 		{
 			"id": "5c702b87-3a1e-4b4a-88ce-1988c69342e6",
 			"application": "dxp_extended_audits",
 			"title": "",
-			"description": "",
-			"package": {
-				"id": "5551ecd0-9c10-4fc0-9646-bcd8792112cc"
-			}
+			"description": ""
 		}
 	],
 	"api": [
@@ -68,6 +69,7 @@
 			"name": "dxp_extended_audits"
 		}
 	],
+	"tile_layout": [],
 	"category": [
 		{
 			"id": "1f2886bc-a791-47c5-be37-b8d2696a7e7f",
@@ -75,7 +77,9 @@
 			"name": "dxp_extended_audits"
 		}
 	],
+	"tilegroup_layout": [],
 	"launchpad": [],
+	"launchpad_layout": [],
 	"certificates": [],
 	"role": [
 		{
@@ -94,5 +98,6 @@
 	"events": [],
 	"code_snippets": [],
 	"wf_determination": [],
-	"wf_taskaction": []
+	"wf_taskaction": [],
+	"theme_ui5": []
 }

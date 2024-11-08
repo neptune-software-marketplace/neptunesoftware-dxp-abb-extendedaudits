@@ -6,38 +6,37 @@ const goAllGroups = await goManager.query(
             name, description, package, 
             (null) as locked, (null) as active,
             "createdAt", "createdBy", "updatedAt", "changedBy"
-        FROM planet9.department`);
+        FROM department`
+);
+
 const goAllRoles = await goManager.query(
     `SELECT 'Role' as "objectType", id as "objectKey",
             name, description, package, 
             (null) as locked, (null) as active,
             "createdAt", "createdBy", "updatedAt", "changedBy"
-        FROM planet9.role`);
-// const goAllUsers = await goManager.find('users', C_ALL);
+        FROM role`
+);
+
 const goAllUsers = await goManager.query(
     `SELECT 'User' as "objectType", id as "objectKey",
             username as name, name as description, (null) as package,
             locked, begins, ends, (null) as active,
             "createdAt", "createdBy", "updatedAt", "changedBy"
-        FROM planet9.users`);
+        FROM users`
+);
+
 const goAllUsersXRoles = await goManager.query(
-    `SELECT role_users as "Role", users_roles as "User" FROM planet9.role_users__users_roles`);
+    `SELECT role_users as "Role", users_roles as "User" FROM role_users__users_roles`
+);
+
 const goAllUsersXGroups = await goManager.query(
     `SELECT department_users as "Department", users_departments as "User"
-       FROM planet9.department_users__users_departments`);
+       FROM department_users__users_departments`
+);
+
 const goAllRolesXGroups = await goManager.query(
-    `SELECT department_roles as "Department", role_departments as "Role" FROM planet9.department_roles__role_departments`);
-
-/*
-console.log('Total groups:', (goAllGroups) ? goAllGroups.length : 0);
-console.log('Total roles:', (goAllRoles) ? goAllRoles.length : 0);
-console.log('Total users:', (goAllUsers) ? goAllUsers.length : 0);
-
-
-console.log('Total users x roles:', (goAllUsersXRoles) ? goAllUsersXRoles.length : 0);
-console.log('Total users x groups:', (goAllUsersXGroups) ? goAllUsersXGroups.length : 0);
-console.log('Total roles x groups:', (goAllRolesXGroups) ? goAllRolesXGroups.length : 0);
-*/
+    `SELECT department_roles as "Department", role_departments as "Role" FROM department_roles__role_departments`
+);
 
 //
 // Calculates the begin and end date to determine if active or not
@@ -54,12 +53,6 @@ for (let loRow of goAllUsers) {
                         ? true
                         : false;
 }
-/*
-console.log('users x roles:', (goAllUsersXRoles));
-console.log('users x groups:', (goAllUsersXGroups));
-console.log('roles x groups:', (goAllRolesXGroups));
-*/
-
 
 result.data = {
     result: {
@@ -72,14 +65,4 @@ result.data = {
     }
 };
 
-/*
-log.debug("v20231010.1");
-log.debug( result.data );
-*/
-
-/*
-console.log(result.data.result);
-console.log(result.data.result.relations);
-*/
-
-complete( );
+complete();
